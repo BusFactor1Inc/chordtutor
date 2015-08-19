@@ -130,6 +130,7 @@ var TransposeValueView = View({
 
 var TransposeUpButtonView = View({
     type: 'TransposeUpButtonView',
+    className: 'TinyButton TransposeUpButtonView',
     model: 'app',
     events: {
         'click': function (e) {
@@ -140,6 +141,7 @@ var TransposeUpButtonView = View({
 
 var TransposeDownButtonView = View({
     type: 'TransposeDownButtonView',
+    className: 'TinyButton TransposeDownButtonView',
     model: 'app',
     events: {
         'click': function (e) {
