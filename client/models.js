@@ -42,27 +42,39 @@ var Player = Model({
         this.create('muted', false);
         this.create('bpm', songInfo.beatsPerMinute);
         this.create('bpb', songInfo.beatsPerMeasure); // beats per bar
+        this.create('nosc', 8);
+
+        this.on('change:volume', function (e) {
+            this.master.gain.value = this.volume();
+        });
 
         this.audio = new AudioContext();
         this.master = this.audio.createGain();
         this.master.connect(this.audio.destination);
-        this.osc = this.audio.createOscillator();
-        this.osc.connect(this.master)
-        this.osc.frequency = 440;
-        this.osc.type = "sine";
+        this.osc = []
+        for(var i = 0; i < this.nosc(); i++) {
+            this.osc.push(this.audio.createOscillator());
+            this.osc[i].connect(this.master)
+            this.osc[i].frequency.value = 440/(i+1);
+            this.osc[i].type = "sine";
+        }
     },
 
     play: function () {
-        alert('playing');
-        this.osc.start(0);
+        this.osc[0].start(0);
+        this.osc[1].start(1);
+        this.osc[2].start(2);
+        this.osc[3].start(3);
     },
 
     pause: function () {
     },
 
     stop: function () {
-        alert('stopping');
-        this.osc.stop();
+        this.osc[0].stop();
+        this.osc[1].stop();
+        this.osc[2].stop();
+        this.osc[3].stop();
     },
 
     mute: function () {
@@ -158,7 +170,7 @@ var App = Model({
 
         if(this.volume() < 100)
             this.volume(this.volume()+10);
-        return setVolume();
+        return this.setVolume();
     },
 
     volumeDown: function () {
@@ -167,7 +179,7 @@ var App = Model({
 
         if(this.volume() > 0)
             this.volume(this.volume()-10);
-        return setVolume()
+        return this.setVolume()
     },
 
     volumeMute: function () {

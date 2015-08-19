@@ -1,17 +1,19 @@
 var VolumeUpButtonView = View({
     type: 'TinyButton VolumeUpButtonView',
+    model: 'app',
     events: {
         'click': function () {
-            alert('Volume Up');
+            this.app.volumeUp();
         }
     }
 });
 
 var VolumeDownButtonView = View({
     type: 'TinyButton VolumeDownButtonView',
+    model: 'app',
     events: {
         'click': function () {
-            alert('Volume Down');
+            this.app.volumeDown();
         }
     }
 });
