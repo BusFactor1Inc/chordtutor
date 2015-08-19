@@ -4,7 +4,7 @@ var InstrumentSelectNameView = View({
     init: function (model) {
     },
     render: function () {
-        this.$el.html('InstrumentSelectNameView');
+        this.$el.html(this.instrument.name());
     }
 });
 
