@@ -9,22 +9,6 @@ var Instruments = Model({
     type: 'Instruments'
 });
 
-var Section = Model({
-    type: 'Section',
-    init: function (name, measure, chords) {
-        this.create('name', name);
-        this.create('measure', measure);
-        this.create('chords', chords);
-    },
-    
-    load: function(rawSection) {
-        this.name(rawSection.name);
-        this.measure(rawSection.name);
-        this.chords(rawSection.chords);
-        return this;
-    }
-});
-
 var Note = Model({
     type: 'Note',
     init: function (time, freq) {
@@ -42,7 +26,43 @@ var Notes = Model({
 });
 
 var Song = Model({
-    type: 'Song'
+    type: 'Song',
+    load: function (songInfo, sectionOffset) {
+        // TODO: compile song info into this.song()
+    }
+});
+
+var Player = Model({
+    type: 'Player',
+    init: function (songInfo) {
+        this.create('songInfo', songInfo);
+        this.create('song', new Song().load(songInfo));
+    },
+
+    play: function () {
+    },
+
+    pause: function () {
+    },
+
+    stop: function () {
+    }
+});
+
+var Section = Model({
+    type: 'Section',
+    init: function (name, measure, chords) {
+        this.create('name', name);
+        this.create('measure', measure);
+        this.create('chords', chords);
+    },
+    
+    load: function(rawSection) {
+        this.name(rawSection.name);
+        this.measure(rawSection.name);
+        this.chords(rawSection.chords);
+        return this;
+    }
 });
 
 var SongInfo = Model({
@@ -79,26 +99,35 @@ var App = Model({
     type: 'App',
     init: function (songInfo, instruments) {
         this.create('songInfo', songInfo);
+        this.create('player', new Player(songInfo));
         this.create('instruments', instruments);
         this.create('tempo', 90);
         this.create('transpose', 0);
         this.create('mute', false);
+        this.create('paused', false);
     },
 
     play: function () {
-        alert('play');
+        this.player().play();
+    },
+
+    pause: function () {
+        this.player().pause();
+        return this.paused(!this.paused());
     },
 
     stop: function () {
-        alert('stop');
+        this.player().stop();
     },
 
     volumeUp: function () {
-        alert('volumeUp');
+        if(this.volume() < 100)
+            this.volume(this.volume()+10);
     },
 
     volumeDown: function () {
-        alert('volumeDown');
+        if(this.volume() > 0)
+            this.volume(this.volume()-10);
     },
 
     volumeMute: function () {
@@ -106,19 +135,21 @@ var App = Model({
     },
 
     tempoUp: function () {
-        alert('tempoUp');
+        this.tempo(this.tempo()+1);
     },
 
     tempoDown: function () {
-        alert('tempoDown');
+        this.tempo(this.tempo()-1);
     },
 
     transposeUp: function () {
-        alert('transposeUp');
+        if(this.transpose() < 12)
+            this.transpose(this.transpose()+1);
     },
 
     transposeDown: function () {
-        alert('transposeDown');
+        if(this.transpose() > -12)
+            this.transpose(this.transpose()-1);
     },
 
     

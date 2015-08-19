@@ -43,6 +43,9 @@ var TempoLabelView = View({
 var TempoValueView = View({
     type: 'TempoValueView',
     model: 'app',
+    init: function () {
+        this.app.on('change:tempo', this.render, this);
+    },
     render: function () {
         return this.$el.text(this.app.tempo());
     }
@@ -123,6 +126,9 @@ var TransposeLabelView = View({
 var TransposeValueView = View({
     type: 'TransposeValueView',
     model: 'app',
+    init: function () {
+        this.app.on('change:transpose', this.render, this);
+    },
     render: function () {
         return this.$el.text(this.app.transpose());
     }
