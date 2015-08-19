@@ -1,4 +1,4 @@
-DEPS=app.js
+DEPS=transport-view.js song-view.js app-view.js app.js
 
 LIBS=lib/jquery/dist/jquery.js lib/px2/px2.js 
 
