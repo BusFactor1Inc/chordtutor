@@ -151,18 +151,32 @@ var TransposeDownButtonView = View({
 var TransposeControlsView = View({
     type: 'TransposeControlsView',
     model: 'app',
+    init: function() {
+        this.create('up', new TransposeUpButtonView(this.app));
+        this.create('down', new TransposeDownButtonView(this.app));
+    },
+    render: function() {
+        var html = [
+            this.up().$el,
+            this.down().$el
+        ];
+        return this.$el.html(html);
+    }
+});
+
+var TransposeView = View({
+    type: 'TransposeView',
+    model: 'app',
     init: function () {
         this.create('label', new TransposeLabelView(this.app));
         this.create('value', new TransposeValueView(this.app));
-        this.create('up', new TransposeUpButtonView(this.app));
-        this.create('down', new TransposeDownButtonView(this.app));
+        this.create('controls', new TransposeControlsView(this.app));
     },
     render: function () {
         var html = [
             this.label().$el,
             this.value().$el,
-            this.up().$el,
-            this.down().$el
+            this.controls().$el
         ];
         return this.$el.html(html);
     }
@@ -174,7 +188,7 @@ var PlaybackView = View({
     init: function (model) {
         this.create('playback', new PlaybackControlsView(app));
         this.create('tempo', new TempoView(app));
-        this.create('transpose', new TransposeControlsView(app));
+        this.create('transpose', new TransposeView(app));
     },
     render: function () {
         var html = [
