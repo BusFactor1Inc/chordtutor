@@ -67,7 +67,9 @@ body * {
 .PlayButtonView,
 .StopButtonView,
 .PlaybackControlsView,
-.TempoView {
+.TempoView,
+.TempoControlsView,
+.TempoLabelValueContainerView {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
@@ -75,11 +77,10 @@ body * {
 
 .VolumeToggleButtonView,
 .PlayButtonView,
-.StopButtonView {
+.StopButtonView,
+.TempoLabelValueContainerView {
   margin: 0 0.5em 0 0;
 }
-
-
 
 .InstrumentSelectNextButtonView:before,
 .TempoUpButtonView:before,
@@ -109,4 +110,8 @@ body * {
 
 .StopButtonView:before {
   content: "\f04d";
+}
+
+.TempoLabelView:before {
+  content: "Tempo";
 }
