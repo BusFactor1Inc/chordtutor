@@ -23,6 +23,7 @@ var App = Model({
         this.create('song', song);
         this.create('instruments', instruments);
         this.create('tempo', 90);
+        this.create('transpose', 0);
     }
     
 });

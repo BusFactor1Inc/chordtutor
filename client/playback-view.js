@@ -36,9 +36,6 @@ var PlaybackControlsView = View({
 
 var TempoLabelView = View({
     type: 'TempoLabelView',
-    render: function () {
-        return this.$el.text("Tempo");
-    }
 });
 
 var TempoValueView = View({
@@ -89,9 +86,6 @@ var TempoControlsView = View({
                                 
 var TransposeLabelView = View({
     type: 'TransposeLabelView',
-    render: function () {
-        return this.$el.text("Transpose");
-    }
 });
 
 var TransposeValueView = View({
