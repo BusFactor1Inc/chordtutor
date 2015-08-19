@@ -10,6 +10,7 @@ var AppView = View({
             this.controls().$el,
             this.song().$el
         ];
+        // TODO: set title
         this.$el.html(html);
     }
 });

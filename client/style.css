@@ -2,11 +2,17 @@ div {
     border: solid 1px red;
 }
 
-ControlsView {
+.Button {
 }
 
-SongView {
+.Select {
 }
 
-AppView {
+.ControlsView {
+}
+
+.SongView {
+}
+
+.AppView {
 }
