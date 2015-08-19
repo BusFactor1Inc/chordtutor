@@ -16,3 +16,14 @@ div {
 
 .AppView {
 }
+
+.TinyButton {
+}
+
+.InstrumentSelectNextButtonView:before {
+    content: "+";
+}
+
+.InstrumentSelectPrevButtonView:before {
+    content: "-";
+}
