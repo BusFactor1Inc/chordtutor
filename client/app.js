@@ -62,6 +62,7 @@ var App = Model({
         this.create('instruments', instruments);
         this.create('tempo', 90);
         this.create('transpose', 0);
+        this.create('mute', false);
     },
 
     play: function () {
@@ -80,8 +81,9 @@ var App = Model({
         alert('volumeDown');
     },
 
-    mute: function () {
-        alert('mute');
+    volumeMute: function () {
+        var oldMute = this.mute();
+        return this.mute(!oldMute);
     },
 
     tempoUp: function () {

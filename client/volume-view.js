@@ -33,9 +33,17 @@ var VolumeControlsView = View({
 
 var VolumeToggleButtonView = View({
     type: 'LargeButton VolumeToggleButtonView',
+    model: 'app',
     events: {
         'click': function () {
-            alert('Volume Toggle');
+            var isMuted = app.volumeMute();
+            if(isMuted) {
+                this.$el.addClass('VolumeMuteButtonView');
+                this.$el.removeClass('VolumeToggleButtonView');
+            } else {
+                this.$el.removeClass('VolumeMuteButtonView');
+                this.$el.addClass('VolumeToggleButtonView');
+            }
         }
     }
 });

@@ -63,13 +63,22 @@ body * {
 }
 
 .VolumeToggleButtonView,
-.VolumeControlsView {
+.VolumeControlsView,
+.PlayButtonView,
+.StopButtonView,
+.PlaybackControlsView,
+.TempoView,
+.TempoControlsView,
+.TempoLabelValueContainerView {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
 
-.VolumeToggleButtonView {
+.VolumeToggleButtonView,
+.PlayButtonView,
+.StopButtonView,
+.TempoLabelValueContainerView {
   margin: 0 0.5em 0 0;
 }
 
@@ -93,4 +102,16 @@ body * {
 
 .VolumeMuteButtonView:before {
   content: "\f026";
+}
+
+.PlayButtonView:before {
+  content: "\f04b";
+}
+
+.StopButtonView:before {
+  content: "\f04d";
+}
+
+.TempoLabelView:before {
+  content: "Tempo";
 }
