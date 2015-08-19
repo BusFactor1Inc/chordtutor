@@ -1,4 +1,3 @@
-
 var sin = new Instrument('Sin Wave');
 var triangle = new Instrument('Triangle Wave');
 var square = new Instrument('Square Wave');
