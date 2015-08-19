@@ -50,11 +50,8 @@ var TempoValueView = View({
 
 var TempoUpButtonView = View({
     type: 'TempoUpButtonView',
-<<<<<<< HEAD
     className: 'TinyButton TempoUpButtonView',
-=======
     model: 'app',
->>>>>>> 2958f08b8cdd7e0d5e280f6ef8fca5a370034a4f
     events: {
         'click': function (e) {
             app.tempoUp();
