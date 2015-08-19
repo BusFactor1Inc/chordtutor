@@ -1,4 +1,4 @@
-DEPS=transport-view.js song-view.js app-view.js app.js
+DEPS=volume-view.js playback-view.js instrument-select-view.js file-info-view.js transport-view.js song-view.js app-view.js app.js
 
 LIBS=lib/jquery/dist/jquery.js lib/px2/px2.js lib/underscore/underscore.js 
 

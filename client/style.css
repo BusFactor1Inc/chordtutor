@@ -1,12 +1,96 @@
-div {
-    border: solid 1px red;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
-ControlsView {
+body * {
+  box-sizing: border-box;
 }
 
-SongView {
+.Button {
 }
 
-AppView {
+.Select {
+}
+
+.ControlsView {
+  background: #0786E0;
+  padding: 0.5em;
+  border: none;
+}
+
+  /* Shared styles for control bar containers */
+  .FileInfoView,
+  .InstrumentSelectView,
+  .PlaybackView,
+  .VolumeView {
+    color: #f5f5f5;
+    font-size: 0.75em;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0.5em;
+  }
+
+  /* Individual styles for control bar containers */
+  .FileInfoView {
+    width: 40%;
+  }
+  .InstrumentSelectView {
+    width: 20%;
+  }
+  .PlaybackView {
+    width: 35%;
+  }
+  .VolumeView {
+    width: 5%;
+  }
+
+.SongView {
+}
+
+.AppView {
+}
+
+.TinyButton, .LargeButton {
+  font-family: 'FontAwesome';
+  font-size: 1em;
+}
+
+.LargeButton {
+  font-size: 2em;
+}
+
+.VolumeToggleButtonView,
+.VolumeControlsView {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.VolumeToggleButtonView {
+  margin: 0 0.5em 0 0;
+}
+
+.InstrumentSelectNextButtonView:before,
+.TempoUpButtonView:before,
+.TransposeUpButtonView:before,
+.VolumeUpButtonView:before {
+  content: "\f0d8";
+}
+
+.InstrumentSelectPrevButtonView:before,
+.TempoDownButtonView:before,
+.TransposeDownButtonView:before,
+.VolumeDownButtonView:before {
+  content: "\f0d7";
+}
+
+.VolumeToggleButtonView:before {
+  content: "\f028";
+}
+
+.VolumeMuteButtonView:before {
+  content: "\f026";
 }
