@@ -53,9 +53,24 @@ body * {
 .AppView {
 }
 
-.TinyButton {
+.TinyButton, .LargeButton {
   font-family: 'FontAwesome';
   font-size: 1em;
+}
+
+.LargeButton {
+  font-size: 2em;
+}
+
+.VolumeToggleButtonView,
+.VolumeControlsView {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.VolumeToggleButtonView {
+  margin: 0 0.5em 0 0;
 }
 
 .InstrumentSelectNextButtonView:before,
@@ -70,4 +85,12 @@ body * {
 .TransposeDownButtonView:before,
 .VolumeDownButtonView:before {
   content: "\f0d7";
+}
+
+.VolumeToggleButtonView:before {
+  content: "\f028";
+}
+
+.VolumeMuteButtonView:before {
+  content: "\f026";
 }
