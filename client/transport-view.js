@@ -1,14 +1,16 @@
 var FileInfoTitleView = View({
     type: 'FileInfoTitleView',
+    model: 'song',
     render: function () {
-        return this.$el.html('FileInfoTitleView');
+        return this.$el.text('Title: ' + this.song.title());
     }
 });
 
 var FileInfoAuthorView = View({
     type: 'FileInfoAuthorView',
+    model: 'song',
     render: function () {
-        return this.$el.html('FileInfoAuthorView');
+        return this.$el.text('Author: ' + this.song.author());
     }
 });
 
@@ -100,7 +102,7 @@ var ControlsView = View({
     type: 'ControlsView',
     model: 'app',
     init: function (model) {
-        this.create('fileInfo', new FileInfoView(app));
+        this.create('fileInfo', new FileInfoView(app.song()));
         this.create('instrumentSelect', new InstrumentSelectView(app.instruments()));
         this.create('playbackView', new PlaybackView(app));
         this.create('volumeView', new VolumeView(app));
