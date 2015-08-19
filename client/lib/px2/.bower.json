@@ -1,7 +1,7 @@
 {
   "name": "px2",
   "main": "px2.js",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "homepage": "https://github.com/burtonsamograd/px2",
   "authors": [
     "Burton Samograd <burton.samograd@gmail.com>"
@@ -27,14 +27,14 @@
   "dependencies": {
     "jquery": "~2.1.4"
   },
-  "_release": "1.1.7",
+  "_release": "1.1.8",
   "_resolution": {
     "type": "version",
-    "tag": "1.1.7",
-    "commit": "9eff2aab117149da229daa16bdb2044a1aff36e9"
+    "tag": "1.1.8",
+    "commit": "392097301e46215ada7829c3402688d1dcf77591"
   },
   "_source": "git://github.com/burtonsamograd/px2.git",
-  "_target": "~1.1.7",
+  "_target": "~1.1.8",
   "_originalSource": "px2",
   "_direct": true
 }
