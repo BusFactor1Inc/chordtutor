@@ -1,1 +1,4 @@
 *~
+client/all.*
+client/*.min.*
+client/index.html
