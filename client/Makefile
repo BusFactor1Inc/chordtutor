@@ -1,21 +1,21 @@
-DEPS=volume-view.js playback-view.js instrument-select-view.js file-info-view.js transport-view.js song-view.js app-view.js app.js
+DEPS=parser.js models.js volume-view.js playback-view.js instrument-select-view.js file-info-view.js transport-view.js song-view.js app-view.js app.js
 
 LIBS=lib/jquery/dist/jquery.js lib/px2/px2.js lib/underscore/underscore.js 
 
 all.js: $(LIBS) $(DEPS)
-	cat $^ > $@
+	cat $(LIBS) $(DEPS) > $@
 
 all.css: style.css lib/font-awesome/css/font-awesome.css
 	cat $^ > $@
 
-index.html: min
+index.html: app.min.js style.min.css
 	./compile.sh > index.html
 
 min: app.min.js style.min.css
 .DUMMY: deploy min 
 
 app.min.js: all.js
-	uglify -s app.js -o app.min.js
+	uglify -s all.js -o app.min.js
 
 parser.min.js: parser.js
 	uglify -s parser.js -o parser.min.js

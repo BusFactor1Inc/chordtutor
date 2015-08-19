@@ -1,109 +1,3 @@
-var Instrument = Model({
-    type: 'Instrument',
-    init: function(name) {
-        this.create('name', name);
-    }
-});
-
-var Instruments = Model({
-    type: 'Instruments'
-});
-
-var Section = Model({
-    type: 'Section',
-    init: function (name, measure, chords) {
-        this.create('name', name);
-        this.create('measure', measure);
-        this.create('chords', chords);
-    },
-    
-    load: function(rawSection) {
-        this.name(rawSection.name);
-        this.measure(rawSection.name);
-        this.chords(rawSection.chords);
-        return this;
-    }
-});
-
-var Song = Model({
-    type: 'Song',
-    contains: 'Section',
-    init: function (title, author,
-                    beatsPerMinute,
-                    beatsPerMeasure,
-                    key) {
-        this.create('title', title);
-        this.create('author', author);
-        this.create('beatsPerMinute', beatsPerMinute);
-        this.create('beatsPerMeasure', beatsPerMeasure);
-        this.create('key', key);
-    },
-
-    load: function(rawSong) {
-        this.title(rawSong.title);
-        this.author(rawSong.author);
-        this.beatsPerMinute(rawSong.beatsPerMinute);
-        this.beatsPerMeasure(rawSong.beatsPerMeasure);
-        this.key(rawSong.key);
-
-        var sections = rawSong.sections;
-        for(var i = 0; i < sections.length; i++) {
-            this.add(new Section().load(sections[i]));
-        }
-
-        return this;
-    }
-});
-
-var App = Model({
-    type: 'App',
-    init: function (song, instruments) {
-        this.create('song', song);
-        this.create('instruments', instruments);
-        this.create('tempo', 90);
-        this.create('transpose', 0);
-        this.create('mute', false);
-    },
-
-    play: function () {
-        alert('play');
-    },
-
-    stop: function () {
-        alert('stop');
-    },
-
-    volumeUp: function () {
-        alert('volumeUp');
-    },
-
-    volumeDown: function () {
-        alert('volumeDown');
-    },
-
-    volumeMute: function () {
-        var oldMute = this.mute();
-        return this.mute(!oldMute);
-    },
-
-    tempoUp: function () {
-        alert('tempoUp');
-    },
-
-    tempoDown: function () {
-        alert('tempoDown');
-    },
-
-    transposeUp: function () {
-        alert('transposeUp');
-    },
-
-    transposeDown: function () {
-        alert('transposeDown');
-    },
-
-    
-});
 
 var sin = new Instrument('Sin Wave');
 var triangle = new Instrument('Triangle Wave');
@@ -115,6 +9,7 @@ instruments.add(triangle);
 instruments.add(square);
 instruments.add(saw);
 
+/*
 var rawSong = {
     title: 'my first song',
     author: 'xxx',
@@ -134,9 +29,32 @@ var rawSong = {
         }
     ]
 }
+*/
 
-var song = new Song().load(rawSong);
+var songFileData = " \
+:title=My first song: \
+:author=Steely Dan: \
+:beatsPerMinute=120: \
+:beatsPerMeasure=4: \
+:key=C: \
+:section=Intro: \
+:|Dm|C|Dm|C|: \
+:section=Verse1: \
+:|C|Em C| \
+ |Em|G C| \
+ |C|Em|C4 G7|C| \
+ |C F|C G|: \
+:section=Interlude: \
+:|C|C|C G|G C| \
+ |C F|C G|: \
+:section=Verse2: \
+:|C F|C G| \
+ |C F|C G|: \
+:section=End: \
+:|Dm|C|Dm|C|: ";
 
+var parser = new Parser(songFileData);
+var song = new Song().load(parser.do());
 var app = new App(song, instruments);
 var appView = new AppView(app);
 

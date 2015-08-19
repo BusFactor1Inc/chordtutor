@@ -21,7 +21,6 @@ var SectionChordsView = View({
     init: function (model) {
         var chords = this.section.chords();
         for(var i = 0; i < chords.length; i++) {
-            console.log(chords[i]);
             this.add(new SectionChordView(chords[i]));
         }
     },
