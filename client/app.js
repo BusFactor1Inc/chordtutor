@@ -62,7 +62,45 @@ var App = Model({
         this.create('instruments', instruments);
         this.create('tempo', 90);
         this.create('transpose', 0);
-    }
+    },
+
+    play: function () {
+        alert('play');
+    },
+
+    stop: function () {
+        alert('stop');
+    },
+
+    volumeUp: function () {
+        alert('volumeUp');
+    },
+
+    volumeDown: function () {
+        alert('volumeDown');
+    },
+
+    mute: function () {
+        alert('mute');
+    },
+
+    tempoUp: function () {
+        alert('tempoUp');
+    },
+
+    tempoDown: function () {
+        alert('tempoDown');
+    },
+
+    transposeUp: function () {
+        alert('transposeUp');
+    },
+
+    transposeDown: function () {
+        alert('transposeDown');
+    },
+
+    
 });
 
 var sin = new Instrument('Sin Wave');

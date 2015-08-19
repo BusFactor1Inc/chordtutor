@@ -1,19 +1,21 @@
 var PlayButtonView = View({
     type: 'PlayButtonView',
+    model: 'app',
     className: "LargeButton PlayButtonView",
     events: {
         'click': function (e) {
-            alert('Playing');
+            app.play();
         }
     }
 });
 
 var StopButtonView = View({
     type: 'StopButtonView',
+    model: 'app',
     className: "LargeButton StopButtonView",
     events: {
         'click': function (e) {
-            alert('Stoping');
+            app.stop();
         }
     }
 });
@@ -48,10 +50,14 @@ var TempoValueView = View({
 
 var TempoUpButtonView = View({
     type: 'TempoUpButtonView',
+<<<<<<< HEAD
     className: 'TinyButton TempoUpButtonView',
+=======
+    model: 'app',
+>>>>>>> 2958f08b8cdd7e0d5e280f6ef8fca5a370034a4f
     events: {
         'click': function (e) {
-            alert("Tempo Up");
+            app.tempoUp();
         }
     }
 });
@@ -59,9 +65,10 @@ var TempoUpButtonView = View({
 var TempoDownButtonView = View({
     type: 'TempoDownButtonView',
     className: 'TinyButton TempoDownButtonView',
+    model: 'app',
     events: {
         'click': function (e) {
-            alert("Tempo Down");
+            app.tempoDown();
         }
     }
 });
@@ -126,18 +133,20 @@ var TransposeValueView = View({
 
 var TransposeUpButtonView = View({
     type: 'TransposeUpButtonView',
+    model: 'app',
     events: {
         'click': function (e) {
-            alert("Transpose Up");
+            app.transposeUp();
         }
     }
 });
 
 var TransposeDownButtonView = View({
     type: 'TransposeDownButtonView',
+    model: 'app',
     events: {
         'click': function (e) {
-            alert("Transpose Down");
+            app.transposeDown();
         }
     }
 });
