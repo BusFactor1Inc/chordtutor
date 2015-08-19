@@ -37,6 +37,7 @@ var Player = Model({
     init: function (songInfo) {
         this.create('songInfo', songInfo);
         this.create('song', new Song().load(songInfo));
+        this.create('volume', .5);
     },
 
     play: function () {
@@ -46,6 +47,15 @@ var Player = Model({
     },
 
     stop: function () {
+    },
+
+    mute: function () {
+    },
+
+    volumeUp: function () {
+    },
+
+    volumeDown: function () {
     }
 });
 
@@ -103,8 +113,9 @@ var App = Model({
         this.create('instruments', instruments);
         this.create('tempo', 90);
         this.create('transpose', 0);
-        this.create('mute', false);
+        this.create('muted', false);
         this.create('paused', false);
+        this.create('volume', 50);
     },
 
     play: function () {
@@ -120,18 +131,36 @@ var App = Model({
         this.player().stop();
     },
 
+    setVolume: function () {
+        this.player().volume(this.volume()/100.0);
+        return this.volume();
+    },
+
     volumeUp: function () {
+        if(this.muted())
+            this.volumeMuted();
+
         if(this.volume() < 100)
             this.volume(this.volume()+10);
+        return setVolume();
     },
 
     volumeDown: function () {
+        if(this.muted())
+            this.volumeMuted();
+
         if(this.volume() > 0)
             this.volume(this.volume()-10);
+        return setVolume()
     },
 
     volumeMute: function () {
-        return this.mute(!this.mute());
+        this.muted(!this.muted());
+        if(this.muted())
+            this.player().volume(0);
+        else
+            this.player().volume(this.volume()/100);
+        return this.muted();
     },
 
     tempoUp: function () {
