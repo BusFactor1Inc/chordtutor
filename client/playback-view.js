@@ -45,7 +45,7 @@ var TempoValueView = View({
     type: 'TempoValueView',
     model: 'app',
     render: function () {
-        return this.app.tempo();
+        return this.$el.text(this.app.tempo());
     }
 });
 
