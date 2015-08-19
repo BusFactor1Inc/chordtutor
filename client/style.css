@@ -56,6 +56,7 @@ body * {
 .TinyButton, .LargeButton {
   font-family: 'FontAwesome';
   font-size: 1em;
+  margin: 0 0.5em 0 0;
 }
 
 .LargeButton {
@@ -63,13 +64,17 @@ body * {
 }
 
 .VolumeToggleButtonView,
+.VolumeMuteButtonView,
 .VolumeControlsView,
 .PlayButtonView,
 .StopButtonView,
 .PlaybackControlsView,
 .TempoView,
 .TempoControlsView,
-.TempoLabelValueContainerView {
+.TempoLabelValueContainerView,
+.TransposeView,
+.TransposeControlsView,
+.TransposeLabelValueContainerView {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
@@ -78,7 +83,8 @@ body * {
 .VolumeToggleButtonView,
 .PlayButtonView,
 .StopButtonView,
-.TempoLabelValueContainerView {
+.TempoLabelValueContainerView,
+.TransposeLabelValueContainerView {
   margin: 0 0.5em 0 0;
 }
 
