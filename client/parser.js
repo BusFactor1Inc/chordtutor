@@ -1,9 +1,9 @@
-var Song = function (file) {
+var Parser = function (file) {
   this.file = file;
-  this.data = {};
+  this.songData = {};
 };
 
-Song.prototype.parse = function() {
+Parser.prototype.do = function() {
   
   var songJSON = {};
   var bodyArray = _.filter(this.file.split(':'), function(s) {
@@ -18,7 +18,7 @@ Song.prototype.parse = function() {
   this.parseSections(bodyArray);
 };
 
-Song.prototype.extractHeader = function (bodyArray) {
+Parser.prototype.extractHeader = function (bodyArray) {
   var index = -1;
   for (var i = 0; i < bodyArray.length; i++) {
     if (bodyArray[i].indexOf("section=") > -1) {
@@ -35,27 +35,27 @@ Song.prototype.extractHeader = function (bodyArray) {
   return header;
 };
 
-Song.prototype.parseHeader = function (header) {
+Parser.prototype.parseHeader = function (header) {
   if (header.length < 1)
     return;
 
   _.each(header, function (s) {
     if (s.indexOf('title=') > -1) {
-      this.data.title = s.split('title=')[1];
+      this.songData.title = s.split('title=')[1];
     } else if (s.indexOf('author=') > -1) {
-      this.data.author = s.split('author=')[1];
+      this.songData.author = s.split('author=')[1];
     } else if (s.indexOf('beatsPerMinute=') > -1) {
-      this.data.beatsPerMinute = s.split('beatsPerMinute=')[1];
+      this.songData.beatsPerMinute = s.split('beatsPerMinute=')[1];
     } else if (s.indexOf('beatsPerMeasure=') > -1) {
-      this.data.beatsPerMeasure = s.split('beatsPerMeasure=')[1];
+      this.songData.beatsPerMeasure = s.split('beatsPerMeasure=')[1];
     } else if (s.indexOf('key=') > -1) {
-      this.data.key = s.split('key=')[1];
+      this.songData.key = s.split('key=')[1];
     }
   }, this);
 };
 
-Song.prototype.parseSections = function (sectionArray) {  
-  this.data.sections = [];
+Parser.prototype.parseSections = function (sectionArray) {  
+  this.songData.sections = [];
   var lastSection;
   var measure = 0;
   _.each(sectionArray, function (s) {
@@ -69,7 +69,7 @@ Song.prototype.parseSections = function (sectionArray) {
         return !!c.trim();
       });
       measure += lastSection.chords.length;
-      this.data.sections.push(lastSection);
+      this.songData.sections.push(lastSection);
     }
   }, this);
 };
@@ -96,7 +96,7 @@ var mock_file = " \
 :section=End: \
 :|Dm|C|Dm|C|: ";
 
-var song = new Song(mock_file);
-song.parse();
+var parser = new Parser(mock_file);
+parser.do();
 
-console.log(song.data);
+console.log(parser.songData);
