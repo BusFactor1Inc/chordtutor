@@ -9,11 +9,49 @@ var Instruments = Model({
     type: 'Instruments'
 });
 
+var Section = Model({
+    type: 'Section',
+    init: function (name, measure, chords) {
+        this.create('name', name);
+        this.create('measure', measure);
+        this.create('chords', chords);
+    },
+    
+    load: function(rawSection) {
+        this.name(rawSection.name);
+        this.measure(rawSection.name);
+        this.chords(rawSection.chords);
+        return this;
+    }
+});
+
 var Song = Model({
     type: 'Song',
-    init: function (title, author) {
+    contains: 'Section',
+    init: function (title, author,
+                    beatsPerMinute,
+                    beatsPerMeasure,
+                    key) {
         this.create('title', title);
         this.create('author', author);
+        this.create('beatsPerMinute', beatsPerMinute);
+        this.create('beatsPerMeasure', beatsPerMeasure);
+        this.create('key', key);
+    },
+
+    load: function(rawSong) {
+        this.title(rawSong.title);
+        this.author(rawSong.author);
+        this.beatsPerMinute(rawSong.beatsPerMinute);
+        this.beatsPerMeasure(rawSong.beatsPerMeasure);
+        this.key(rawSong.key);
+
+        var sections = rawSong.sections;
+        for(var i = 0; i < sections.length; i++) {
+            this.add(new Section().load(sections[i]));
+        }
+
+        return this;
     }
 });
 
@@ -25,7 +63,6 @@ var App = Model({
         this.create('tempo', 90);
         this.create('transpose', 0);
     }
-    
 });
 
 var sin = new Instrument('Sin Wave');
@@ -38,7 +75,27 @@ instruments.add(triangle);
 instruments.add(square);
 instruments.add(saw);
 
-var song = new Song("Code Blast", "Hack Reactor");
+var rawSong = {
+    title: 'my first song',
+    author: 'xxx',
+    beatsPerMinute: 120,
+    beatsPerMeasure: 4,
+    key: 'C',
+    sections: [
+        {
+            name: 'Intro',
+            measure: 0,
+            chords: ['C', 'F', 'F', 'C']
+        },
+        {
+            name: 'Verse1',
+            measure: 5,
+            chords: ['Am', 'E', 'Am', 'Am']
+        }
+    ]
+}
+
+var song = new Song().load(rawSong);
 
 var app = new App(song, instruments);
 var appView = new AppView(app);
