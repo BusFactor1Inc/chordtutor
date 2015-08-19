@@ -25,8 +25,28 @@ var Section = Model({
     }
 });
 
+var Note = Model({
+    type: 'Note',
+    init: function (time, freq) {
+        this.time = time;
+        this.freq = freq;
+    },
+    play: function () {
+        // ???
+    }
+});
+
+var Notes = Model({
+    type: 'Notes',
+    contains: 'Note'
+});
+
 var Song = Model({
-    type: 'Song',
+    type: 'Song'
+});
+
+var SongInfo = Model({
+    type: 'SongInfo',
     contains: 'Section',
     init: function (title, author,
                     beatsPerMinute,
@@ -57,8 +77,8 @@ var Song = Model({
 
 var App = Model({
     type: 'App',
-    init: function (song, instruments) {
-        this.create('song', song);
+    init: function (songInfo, instruments) {
+        this.create('songInfo', songInfo);
         this.create('instruments', instruments);
         this.create('tempo', 90);
         this.create('transpose', 0);

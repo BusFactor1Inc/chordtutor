@@ -49,10 +49,10 @@ var SongSectionView = View({
 
 var SongView = View({
     type: 'SongView',
-    model: 'song',
+    model: 'songInfo',
     contains: 'SongSectionView',
     init: function (model) {
-        song.each(function (section) {
+        this.songInfo.each(function (section) {
             this.add(new SongSectionView(section));
         }, this);
     },

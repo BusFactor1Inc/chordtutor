@@ -53,8 +53,8 @@ var songFileData = " \
 :|Dm|C|Dm|C|: ";
 
 var parser = new Parser(songFileData);
-var song = new Song().load(parser.do());
-var app = new App(song, instruments);
+var songInfo = new SongInfo().load(parser.do());
+var app = new App(songInfo, instruments);
 var appView = new AppView(app);
 
 $(document).ready(function () {
