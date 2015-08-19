@@ -27,3 +27,15 @@ div {
 .InstrumentSelectPrevButtonView:before {
     content: "-";
 }
+
+.VolumeUpButtonView:before {
+    content: "+";
+}
+
+.VolumeDownButtonView:before {
+    content: "-";
+}
+
+.VolumeToggleButtonView:before {
+    content: "%";
+}
