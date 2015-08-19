@@ -29,6 +29,7 @@ var Song = Model({
     type: 'Song',
     load: function (songInfo, sectionOffset) {
         // TODO: compile song info into this.song()
+        return this;
     }
 });
 
@@ -38,25 +39,40 @@ var Player = Model({
         this.create('songInfo', songInfo);
         this.create('song', new Song().load(songInfo));
         this.create('volume', .5);
+        this.create('muted', false);
+        this.create('bpm', songInfo.beatsPerMinute);
+        this.create('bpb', songInfo.beatsPerMeasure); // beats per bar
+
+        this.audio = new AudioContext();
+        this.master = this.audio.createGain();
+        this.master.connect(this.audio.destination);
+        this.osc = this.audio.createOscillator();
+        this.osc.connect(this.master)
+        this.osc.frequency = 440;
+        this.osc.type = "sine";
     },
 
     play: function () {
+        alert('playing');
+        this.osc.start(0);
     },
 
     pause: function () {
     },
 
     stop: function () {
+        alert('stopping');
+        this.osc.stop();
     },
 
     mute: function () {
+        this.mute(!this.mute());
+        if(this.mute()) {
+            //this.masterGain(0) 
+        } else {
+            //this.masterGain(this.volume());
+        }
     },
-
-    volumeUp: function () {
-    },
-
-    volumeDown: function () {
-    }
 });
 
 var Section = Model({
@@ -165,10 +181,12 @@ var App = Model({
 
     tempoUp: function () {
         this.tempo(this.tempo()+1);
+        return this.player.bpm(this.tempo());
     },
 
     tempoDown: function () {
         this.tempo(this.tempo()-1);
+        return this.player.bpm(this.tempo());
     },
 
     transposeUp: function () {
