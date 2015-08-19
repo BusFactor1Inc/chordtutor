@@ -87,8 +87,57 @@ var TempoControlsView = View({
     }
 });
                                 
+var TransposeLabelView = View({
+    type: 'TransposeLabelView',
+    render: function () {
+        return this.$el.text("Transpose");
+    }
+});
+
+var TransposeValueView = View({
+    type: 'TransposeValueView',
+    model: 'app',
+    render: function () {
+        return this.$el.text(this.app.transpose());
+    }
+});
+
+var TransposeUpButtonView = View({
+    type: 'TransposeUpButtonView',
+    events: {
+        'click': function (e) {
+            alert("Transpose Up");
+        }
+    }
+});
+
+var TransposeDownButtonView = View({
+    type: 'TransposeDownButtonView',
+    events: {
+        'click': function (e) {
+            alert("Transpose Down");
+        }
+    }
+});
+
 var TransposeControlsView = View({
-    type: 'TransposeControlsView'
+    type: 'TransposeControlsView',
+    model: 'app',
+    init: function () {
+        this.create('label', new TransposeLabelView(this.app));
+        this.create('value', new TransposeValueView(this.app));
+        this.create('up', new TransposeUpButtonView(this.app));
+        this.create('down', new TransposeDownButtonView(this.app));
+    },
+    render: function () {
+        var html = [
+            this.label().$el,
+            this.value().$el,
+            this.up().$el,
+            this.down().$el
+        ];
+        return this.$el.html(html);
+    }
 });
                                 
 var PlaybackView = View({
