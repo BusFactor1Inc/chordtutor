@@ -128,6 +128,22 @@ var TransposeValueView = View({
     }
 });
 
+var TransposeLabelValueContainerView = View({
+    type: 'TransposeLabelValueContainerView',
+    model: 'app',
+    init: function(){
+        this.create('label', new TransposeLabelView(this.app));
+        this.create('value', new TransposeValueView(this.app));
+    },
+    render: function(){
+        var html = [
+            this.label().$el,
+            this.value().$el
+        ];
+        return this.$el.html(html);
+    }
+});
+
 var TransposeUpButtonView = View({
     type: 'TransposeUpButtonView',
     className: 'TinyButton TransposeUpButtonView',
@@ -170,14 +186,12 @@ var TransposeView = View({
     type: 'TransposeView',
     model: 'app',
     init: function () {
-        this.create('label', new TransposeLabelView(this.app));
-        this.create('value', new TransposeValueView(this.app));
+        this.create('container', new TransposeLabelValueContainerView(this.app));
         this.create('controls', new TransposeControlsView(this.app));
     },
     render: function () {
         var html = [
-            this.label().$el,
-            this.value().$el,
+            this.container().$el,
             this.controls().$el
         ];
         return this.$el.html(html);
