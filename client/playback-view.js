@@ -50,6 +50,7 @@ var TempoValueView = View({
 
 var TempoUpButtonView = View({
     type: 'TempoUpButtonView',
+    className: 'TinyButton TempoUpButtonView',
     model: 'app',
     events: {
         'click': function (e) {
@@ -60,6 +61,7 @@ var TempoUpButtonView = View({
 
 var TempoDownButtonView = View({
     type: 'TempoDownButtonView',
+    className: 'TinyButton TempoDownButtonView',
     model: 'app',
     events: {
         'click': function (e) {
@@ -68,26 +70,52 @@ var TempoDownButtonView = View({
     }
 });
 
-var TempoControlsView = View({
-    type: 'TempoControlsView',
-    model: 'app',
-    init: function () {
-        this.create('label', new TempoLabelView(this.app));
-        this.create('value', new TempoValueView(this.app));
-        this.create('up', new TempoUpButtonView(this.app));
-        this.create('down', new TempoDownButtonView(this.app));
+var TempoLabelValueContainerView = View({
+    type: 'TempoLabelValueContainerView',
+    init: function (model) {
+        this.create('label', new TempoLabelView(model));
+        this.create('value', new TempoValueView(model));
     },
     render: function () {
         var html = [
             this.label().$el,
             this.value().$el,
-            this.up().$el,
-            this.down().$el
         ];
         return this.$el.html(html);
     }
 });
-                                
+
+var TempoControlsView = View({
+    type: 'TempoControlsView',
+    init: function (model) {
+        this.create('up', new TempoUpButtonView(model));
+        this.create('down', new TempoDownButtonView(model));
+    },
+    render: function () {
+        var html = [
+            this.up().$el,
+            this.down().$el,
+        ];
+        return this.$el.html(html);
+    }
+});
+
+var TempoView = View({
+    type: 'TempoView',
+    model: 'app',
+    init: function () {
+        this.create('container', new TempoLabelValueContainerView(this.app));
+        this.create('controls', new TempoControlsView(this.app));
+    },
+    render: function () {
+        var html = [
+            this.container().$el,
+            this.controls().$el,
+        ];
+        return this.$el.html(html);
+    }
+});
+
 var TransposeLabelView = View({
     type: 'TransposeLabelView',
 });
@@ -123,30 +151,44 @@ var TransposeDownButtonView = View({
 var TransposeControlsView = View({
     type: 'TransposeControlsView',
     model: 'app',
-    init: function () {
-        this.create('label', new TransposeLabelView(this.app));
-        this.create('value', new TransposeValueView(this.app));
+    init: function() {
         this.create('up', new TransposeUpButtonView(this.app));
         this.create('down', new TransposeDownButtonView(this.app));
     },
-    render: function () {
+    render: function() {
         var html = [
-            this.label().$el,
-            this.value().$el,
             this.up().$el,
             this.down().$el
         ];
         return this.$el.html(html);
     }
 });
-                                
+
+var TransposeView = View({
+    type: 'TransposeView',
+    model: 'app',
+    init: function () {
+        this.create('label', new TransposeLabelView(this.app));
+        this.create('value', new TransposeValueView(this.app));
+        this.create('controls', new TransposeControlsView(this.app));
+    },
+    render: function () {
+        var html = [
+            this.label().$el,
+            this.value().$el,
+            this.controls().$el
+        ];
+        return this.$el.html(html);
+    }
+});
+
 var PlaybackView = View({
     type: 'PlaybackView',
     model: 'app',
     init: function (model) {
         this.create('playback', new PlaybackControlsView(app));
-        this.create('tempo', new TempoControlsView(app));
-        this.create('transpose', new TransposeControlsView(app));
+        this.create('tempo', new TempoView(app));
+        this.create('transpose', new TransposeView(app));
     },
     render: function () {
         var html = [

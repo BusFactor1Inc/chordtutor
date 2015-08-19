@@ -1,0 +1,19 @@
+{
+  title: 'my first song',
+  author: 'xxx'
+  beatsPerMinute: 120,
+  beatsPerMeasure: 4,
+  key: 'C'
+  sections: [
+    {
+      name: 'Intro',
+      measure: 0,
+      chords: ['C', 'F', 'F', 'C']
+    },
+    {
+      name: 'Verse1',
+      measure: 5,
+      chords: ['Am', 'E', 'Am', 'Am']
+    }
+  ]
+}
