@@ -338,13 +338,17 @@ var App = Model({
     },
 
     tempoUp: function () {
-        this.tempo(this.tempo()+1);
-        return this.player().bpm(this.tempo());
+        if(this.tempo()) {
+            this.tempo(this.tempo()+1);
+            this.player().bpm(this.tempo());
+        }
     },
 
     tempoDown: function () {
-        this.tempo(this.tempo()-1);
-        return this.player().bpm(this.tempo());
+        if(this.tempo()) {
+            this.tempo(this.tempo()-1);
+            this.player().bpm(this.tempo());
+        }
     },
 
     transposeUp: function () {
