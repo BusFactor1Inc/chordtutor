@@ -206,18 +206,33 @@ var Player = Model({
     },
 });
 
+var Chord = Model({
+    type: 'Chord',
+    init: function (value) {
+        this.value = value;
+    }
+});
+
+var Chords = Model({
+    type: 'Chords',
+    contains: 'Chord'
+});
+
 var Section = Model({
     type: 'Section',
     init: function (name, measure, chords) {
         this.create('name', name);
         this.create('measure', measure);
-        this.create('chords', chords);
+        this.create('chords', new Chords());
     },
     
     load: function(rawSection) {
         this.name(rawSection.name);
         this.measure(rawSection.name);
-        this.chords(rawSection.chords);
+        var chords = rawSection.chords;
+        for(var i = 0; i < chords.length; i++) {
+            this.chords().add(new Chord(chords[i]));
+        }
         return this;
     }
 });

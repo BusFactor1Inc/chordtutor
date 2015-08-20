@@ -13,7 +13,7 @@ var SectionChordView = View({
         this.chord.on('change', this.render, this);
     },
     render: function () {
-        this.$el.text(this.chord);
+        this.$el.text(this.chord.value);
     }
 });
 
@@ -24,7 +24,7 @@ var SectionChordsView = View({
     init: function (model) {
         var chords = this.section.chords();
         for(var i = 0; i < chords.length; i++) {
-            this.add(new SectionChordView(chords[i]));
+            this.add(new SectionChordView(chords.at(i)));
         }
     },
     render: function () {
