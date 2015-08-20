@@ -188,10 +188,20 @@ body * {
   text-align: center;
 }
 
+.TempoValueView {
+  transition: color 0.5s ease;
+}
+
+.TempoValueViewBeat {
+  color: red;
+}
+
 .FileInfoTitleView {
   font-size: 2em;
   font-weight: bold;
 }
+
+
 
 /* MEDIUM */
 @media only screen and (min-width:640px){
@@ -222,6 +232,7 @@ body * {
     display: block;
   }
 }
+
 
 /* LARGE */
 @media only screen and (min-width:1024px){
