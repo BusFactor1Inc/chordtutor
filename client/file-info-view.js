@@ -14,6 +14,14 @@ var FileInfoAuthorView = View({
     }
 });
 
+var FileInfoKeyView = View({
+    type: 'FileInfoKeyView',
+    model: 'song',
+    render: function () {
+        return this.$el.text('Key: ' + (this.song && this.song.key() || ""));
+    }
+});
+
 var FileInfoHiddenSelectView = View({
     type: 'FileInfoHiddenSelectView',
     tagName: "input type='file' value='Select...' style='display:none;'",
@@ -57,11 +65,13 @@ var FileInfoView = View({
     init: function (model) {
         this.create('title', new FileInfoTitleView(this.song));
         this.create('author', new FileInfoAuthorView(this.song));
+        this.create('key', new FileInfoKeyView(this.song));
     },
     render: function () {
         var html = [
             this.title().$el,
             this.author().$el,
+            this.key().$el
         ];
 
         return this.$el.html(html);
