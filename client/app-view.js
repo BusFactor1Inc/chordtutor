@@ -14,6 +14,9 @@ var AppView = View({
             this.controls().measure(e.value);
             this.song().measure(e.value);
         }, this);
+        this.app.on('chordFinished', function (e) {
+            this.song().chordFinished(e.value);
+        }, this);
         
         this.on('load', function (e) {
             var songInfo = this.app.load(e.value);

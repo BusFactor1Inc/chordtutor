@@ -9,6 +9,9 @@ var SectionNameView = View({
 var SectionChordView = View({
     type: 'SectionChordView',
     model: 'chord',
+    init: function (model) {
+        this.chord.on('change', this.render, this);
+    }
     render: function () {
         this.$el.text(this.chord);
     }
@@ -69,6 +72,8 @@ var SongView = View({
     beat: function (e) {
     },
     measure: function (e) {
+    },
+    chordFinished: function (e) {
+
     }
 });
-

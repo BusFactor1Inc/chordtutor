@@ -122,7 +122,9 @@ var Player = Model({
             }, this);
             
             var self = this;
+            var noteEndTimeout;
             notes.forEach(function (note) {
+                dur = note.dur;
                 var osc = self.audio.createOscillator();
                 osc.connect(self.master)
 
@@ -137,7 +139,7 @@ var Player = Model({
                     if(residue2 < 0) {
                         n = lower + residue2;
                     }
-                } else {
+                } if (self.transpose < 0) {
                     var residue2 = lower - n;
                     if(residue2 < 0) {
                         n = upper + residue2;
@@ -150,7 +152,14 @@ var Player = Model({
                 setTimeout(function () {
                     osc.stop();
                 }, note.dur*self.tpb());
+
+                if(!noteEndTimeout) {
+                    noteEndTimeout = setTimeout(function () {
+                        self.trigger('chordFinished');
+                    }, dur*self.tpb());
+                }
             });
+
             self.beat(self.beat()+1);
             this.trigger('beat', self.beat());
             if(self.beat() === self.bpb()) {
