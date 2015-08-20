@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/burtonsamograd/chordtutor/issues"
   },
-  "homepage": "https://github.com/burtonsamograd/chordtutor"
+  "homepage": "https://github.com/burtonsamograd/chordtutor",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }
