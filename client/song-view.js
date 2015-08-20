@@ -52,14 +52,18 @@ var SongView = View({
     model: 'songInfo',
     contains: 'SongSectionView',
     init: function (model) {
+        this.create('fileInfo', new FileInfoView(app.songInfo()));
         this.songInfo.each(function (section) {
             this.add(new SongSectionView(section));
         }, this);
     },
     render: function () {
-        this.$el.html(this.map(function (songSection) {
+        var html = this.map(function (songSection) {
             return songSection.$el;
-        }));
+        });
+
+        html.unshift(this.fileInfo().$el);
+        return this.$el.html(html);
     }
 });
 
