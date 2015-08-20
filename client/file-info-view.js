@@ -16,7 +16,7 @@ var FileInfoAuthorView = View({
 
 var FileInfoHiddenSelectView = View({
     type: 'FileInfoHiddenSelectView',
-    tagName: "input type='file' value='Select...' style='visibility:hidden;'",
+    tagName: "input type='file' value='Select...' style='display:none;'",
     className: 'FileInfoHiddenSelectView',
     events: {
         'change': function (e) {
@@ -28,11 +28,27 @@ var FileInfoHiddenSelectView = View({
 
 var FileInfoSelectView = View({
     type: 'FileInfoSelectView',
+    className: 'LargeButton FileInfoSelectView',
     events: {
         'click': function (e) {
             $('.FileInfoHiddenSelectView').click();
         }
+    }
+});
+
+var FileInfoSelectContainerView = View({
+    type: 'FileInfoSelectContainerView',
+    init: function(){
+        this.create('select', new FileInfoSelectView());
+        this.create('selectHidden', new FileInfoHiddenSelectView());
     },
+    render: function(){
+        var html = [
+            this.select().$el,
+            this.selectHidden().$el
+        ];
+        return this.$el.html(html);
+    }
 });
 
 var FileInfoView = View({
@@ -41,17 +57,13 @@ var FileInfoView = View({
     init: function (model) {
         this.create('title', new FileInfoTitleView(this.song));
         this.create('author', new FileInfoAuthorView(this.song));
-        this.create('select', new FileInfoSelectView(this.song));
-        this.create('selectHidden', new FileInfoHiddenSelectView(this.song));
     },
     render: function () {
         var html = [
             this.title().$el,
             this.author().$el,
-            this.select().$el,
-            this.selectHidden().$el,
         ];
-                        
+
         return this.$el.html(html);
     }
 });
