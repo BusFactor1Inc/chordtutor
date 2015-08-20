@@ -30,6 +30,10 @@ var AppView = View({
             this.app.setInstrument(e.value);
         });
 
+        model.loadDefaultSong(function(songInfo) {
+            self.song(new SongView(songInfo));
+            self.render();
+        });
     },
 
     render: function () {
