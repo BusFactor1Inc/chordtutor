@@ -13,8 +13,7 @@ var InstrumentSelectNextButtonView = View({
     model: 'instruments',
     events: {
         'click': function (e) {
-            if(!this.instruments.next())
-                this.instruments.start();
+            this.instruments.next(true);
             this.trigger('select', this.instruments.current());
         }
     }
@@ -25,8 +24,7 @@ var InstrumentSelectPrevButtonView = View({
     model: 'instruments',
     events: {
         'click': function (e) {
-            if(!this.instruments.prev())
-                this.instruments.end();
+            this.instruments.prev(true);
             this.trigger('select', this.instruments.current());
         }
     }
@@ -65,8 +63,8 @@ var InstrumentSelectView = View({
     },
     render: function () {
         var html = [
-            this.name().$el,
             this.controls().$el,
+            this.name().$el
         ];
         return this.$el.html(html);
     }

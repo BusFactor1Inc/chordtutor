@@ -20,7 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "px2": "~1.1.10",
+    "px2": "~1.1.12",
     "underscore": "~1.8.3"
   }
 }

@@ -116,7 +116,7 @@ var Player = Model({
     },
 
     engine: function () {
-        if(this.playing()) {
+        if(this.playing() && this.song()) {
             var notes = this.song().filter(function (note) {
                 return note.start === (this.measure()*this.bpb())+this.beat();
             }, this);
