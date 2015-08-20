@@ -22,6 +22,7 @@ var AppView = View({
         }, this);
 
     },
+
     render: function () {
         var html = [
             this.controls().$el,

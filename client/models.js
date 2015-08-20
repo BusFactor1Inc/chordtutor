@@ -253,7 +253,9 @@ var App = Model({
 
     },
 
-    load: function(e) {
+    load: function(file) {
+        var fileName = file.name;
+        console.log(fileName);
         var songFileData = " \
 :title=My first song: \
 :author=Steely Dan: \
@@ -276,6 +278,7 @@ var App = Model({
 :section=End: \
 :|Dm|C|Dm|C|: ";
 
+        // TODO: load file as a string and pass to parser
         var parser = new Parser(songFileData);
         var parsedSong = parser.do();
         var songInfo = new SongInfo().load(parsedSong);

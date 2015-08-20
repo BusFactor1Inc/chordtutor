@@ -20,6 +20,7 @@ var FileInfoSelectView = View({
     className: 'Button',
     events: {
         'change': function (e) {
+            console.log(e.target.files[0]);
             this.trigger('load', e.target.files[0]);
         }
     }
