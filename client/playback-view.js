@@ -236,10 +236,8 @@ var PlaybackView = View({
         return this.$el.html(html);
     },
     beat: function (n) {
-        console.log('playback: beat');
     },
     measure: function (n) {
-        console.log('playback: measure');
     }
 
 });

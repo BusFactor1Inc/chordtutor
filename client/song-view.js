@@ -67,10 +67,8 @@ var SongView = View({
     },
 
     beat: function (e) {
-        console.log('song-view: beat');
     },
     measure: function (e) {
-        console.log('song-view: measure');
     }
 });
 

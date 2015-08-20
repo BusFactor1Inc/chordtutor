@@ -143,9 +143,7 @@ var Player = Model({
                     }
                 }
                 
-                console.log(n, note.note, self.transpose());
                 osc.frequency.value = self.midi2freq(n);
-                console.log(n, self.midi2freq(n), note.dur, self.beat());
                 osc.type = "triangle";
                 osc.start(0);
                 setTimeout(function () {
@@ -255,7 +253,6 @@ var App = Model({
 
     load: function(file) {
         var fileName = file.name;
-        console.log(fileName);
         var songFileData = " \
 :title=My first song: \
 :author=Steely Dan: \
