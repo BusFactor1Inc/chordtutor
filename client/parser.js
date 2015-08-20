@@ -1,3 +1,7 @@
+var splitAndFilter = function  (str, separator) {
+  return _.filter(str.split(separator), function(s) { return !!s.trim(); });
+};
+
 var Parser = function (file) {
   this.file = file;
   this.songData = {};
@@ -6,9 +10,7 @@ var Parser = function (file) {
 Parser.prototype.do = function() {
   
   var songJSON = {};
-  var bodyArray = _.filter(this.file.split(':'), function(s) {
-    return !!s.trim();
-  });
+  var bodyArray = splitAndFilter(this.file, ':'); 
 
   // header
   var header = this.extractHeader(bodyArray);
@@ -66,9 +68,7 @@ Parser.prototype.parseSections = function (sectionArray) {
       lastSection.measure = measure;
       lastSection.chords = []; 
     } else if (lastSection) {
-      lastSection.chords = _.filter(s.split('|'), function (c) {
-        return !!c.trim();
-      });
+      lastSection.chords = splitAndFilter(s, '|');
       measure += lastSection.chords.length;
       this.songData.sections.push(lastSection);
     }

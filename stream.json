@@ -1,0 +1,9 @@
+
+// The format is [measure#, beat#, duration, midi_notes_array]
+// see midi notes from http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm 
+// For example | C | C F | looks like this
+[
+  [0, 0, 4, [60, 64, 67]],
+  [1, 0, 2, [60, 64, 67]],
+  [1, 2, 2, [65, 69, 72]],
+]
