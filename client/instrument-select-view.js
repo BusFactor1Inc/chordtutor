@@ -51,8 +51,8 @@ var InstrumentSelectView = View({
     type: 'InstrumentSelectView',
     model: 'instruments',
     init: function (model) {
-        this.instruments.start();
-        this.create('name', new InstrumentSelectNameView(this.instruments.at(0)));
+        
+        this.create('name', new InstrumentSelectNameView(this.instruments.start()));
         this.create('controls', new InstrumentSelectControlsView(model));
         this.trigger('instrument', this.instruments.at(0));
         this.on('select', function (e) {
