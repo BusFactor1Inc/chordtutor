@@ -11,7 +11,7 @@ var SectionChordView = View({
     model: 'chord',
     init: function (model) {
         this.chord.on('change', this.render, this);
-    }
+    },
     render: function () {
         this.$el.text(this.chord);
     }
