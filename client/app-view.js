@@ -3,12 +3,22 @@ var AppView = View({
     model: 'app',
     init: function (model) {
         this.create('controls', new ControlsView(this.app));
-        this.create('songInfo', new SongView(this.app.songInfo()));
+        this.create('song', new SongView(this.app.songInfo()));
+
+        // route
+        this.app.on('beat', function (e) {
+            this.controls().beat(e.value);
+            this.song().beat(e.value);
+        }, this);;
+        this.app.on('measure', function (e) {
+            this.controls().measure(e.value);
+            this.song().measure(e.value);
+        }, this);
     },
     render: function () {
         var html = [
             this.controls().$el,
-            this.songInfo().$el
+            this.song().$el
         ];
         // TODO: set html title
         this.$el.html(html);

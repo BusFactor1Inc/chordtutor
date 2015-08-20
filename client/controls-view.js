@@ -13,5 +13,12 @@ var ControlsView = View({
             this.volume().$el
         ]
         this.$el.html(html);
+    },
+
+    beat: function (n) {
+        this.playback().beat(n);
+    },
+    measure: function (n) {
+        this.playback().measure(n);
     }
 });

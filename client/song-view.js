@@ -64,6 +64,13 @@ var SongView = View({
 
         html.unshift(this.fileInfo().$el);
         return this.$el.html(html);
+    },
+
+    beat: function (e) {
+        console.log('song-view: beat');
+    },
+    measure: function (e) {
+        console.log('song-view: measure');
     }
 });
 

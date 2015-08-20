@@ -123,11 +123,12 @@ var Player = Model({
                     osc.stop();
                 }, note.dur*self.tpb());
             });
-
             self.beat(self.beat()+1);
+            this.trigger('beat', self.beat());
             if(self.beat() === self.bpb()) {
                 self.beat(0);
                 self.measure(this.measure()+1);
+                this.trigger('measure', self.measure());
             }
         }
 

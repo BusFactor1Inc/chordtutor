@@ -234,5 +234,12 @@ var PlaybackView = View({
             this.transpose().$el
         ];
         return this.$el.html(html);
+    },
+    beat: function (n) {
+        console.log('playback: beat');
+    },
+    measure: function (n) {
+        console.log('playback: measure');
     }
+
 });
