@@ -12,9 +12,14 @@ var SectionChordView = View({
     init: function (model) {
         this.create('selected', false);
         this.on('change', function () {
-            console.log('render');
             this.render();
         }, this);
+        if(this.chord.length === 2) {
+            this.$el.addClass('SectionChordView2Beat');
+        }
+        if(this.chord.length === 4) {
+            this.$el.addClass('SectionChordView4Beat');
+        }
     },
     render: function () {
         if(this.selected()) {

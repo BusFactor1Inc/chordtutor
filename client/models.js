@@ -211,8 +211,9 @@ var Player = Model({
 
 var Chord = Model({
     type: 'Chord',
-    init: function (value) {
+    init: function (value, length) {
         this.value = value;
+        this.length = length;
     }
 });
 
@@ -234,7 +235,10 @@ var Section = Model({
         this.measure(rawSection.name);
         var chords = rawSection.chords;
         for(var i = 0; i < chords.length; i++) {
-            this.chords().add(new Chord(chords[i]));
+            var chords2 = chords[i].split(' ');
+            for(var j = 0; j < chords2.length; j++) {
+                this.chords().add(new Chord(chords2[j], 4/chords2.length));
+            }
         }
         return this;
     }
