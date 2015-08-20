@@ -8,8 +8,6 @@ var Parser = function (file) {
 };
 
 Parser.prototype.do = function() {
-  
-  var songJSON = {};
   var bodyArray = splitAndFilter(this.file, ':'); 
 
   // header
