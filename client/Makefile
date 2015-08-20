@@ -20,6 +20,9 @@ app.min.js: all.js
 parser.min.js: parser.js
 	uglify -s parser.js -o parser.min.js
 
+streamer.min.js: streamer.js
+	uglify -s streamer.js -o streamer.min.js
+
 style.min.css: all.css
 	uglify -c -s all.css -o style.min.css
 

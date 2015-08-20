@@ -174,6 +174,7 @@ body * {
 .TempoValueView,
 .TransposeValueView {
   font-size: 2em;
+  text-align: center;
 }
 
 .FileInfoTitleView {
@@ -185,6 +186,10 @@ body * {
 @media only screen and (min-width:640px){
   .SectionNameView { width: 20%; display: inline-block; vertical-align: top;}
   .SectionChordsView { width: 80%; display: inline-block; vertical-align: top; border-left: 5px solid #dadada; }
+  .TempoLabelView,
+  .TransposeLabelView {
+    display: block;
+  }
 }
 
 /* LARGE */
