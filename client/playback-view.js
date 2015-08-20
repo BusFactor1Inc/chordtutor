@@ -4,14 +4,22 @@ var PlayButtonView = View({
     className: "LargeButton PlayButtonView",
     events: {
         'click': function (e) {
-            var isPaused = app.pause();
-            if(isPaused){
-                this.$el.addClass('PlayButtonView');
-                this.$el.removeClass('PlayButtonPausedView');
-            } else {
-                this.$el.addClass('PlayButtonPausedView');
-                this.$el.removeClass('PlayButtonView');
-            }
+            this.app.pause()
+        }
+    },
+
+    init: function(model) {
+        this.app.on('change:paused', this.render, this);
+    },
+    
+    render: function () {
+        var isPaused = this.app.paused();
+        if(isPaused){
+            this.$el.addClass('PlayButtonPausedView');
+            this.$el.removeClass('PlayButtonView');
+        } else {
+            this.$el.addClass('PlayButtonView');
+            this.$el.removeClass('PlayButtonPausedView');
         }
     }
 });

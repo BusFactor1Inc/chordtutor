@@ -232,6 +232,7 @@ var App = Model({
     },
 
     stop: function () {
+        this.paused(false);
         this.player().stop();
     },
 
