@@ -55,7 +55,6 @@ body * {
     text-align: right;
   }
 
-
 /* CONTENT AREA */
 
 .SongView {
@@ -92,7 +91,6 @@ body * {
     .SectionChordView:nth-child(4n) {
         border-right: none;
     }
-
 
 .VolumeToggleButtonView,
 .VolumeMuteButtonView,
@@ -184,10 +182,26 @@ body * {
 
 /* MEDIUM */
 @media only screen and (min-width:640px){
-  .SectionNameView { width: 20%; display: inline-block; vertical-align: top;}
-  .SectionChordsView { width: 80%; display: inline-block; vertical-align: top; border-left: 5px solid #dadada; }
+  .SectionNameView,
+  .SectionChordsView {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .SectionChordsView {
+    width: 80%;
+    border-left: 5px solid #dadada;
+  }
+
   .TempoLabelView,
   .TransposeLabelView {
+    display: block;
+  }
+
+  .TempoValueView,
+  .TransposeValueView {
+    font-size: 1.5em;
     display: block;
   }
 }
