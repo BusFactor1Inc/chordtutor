@@ -3,7 +3,7 @@ var AppView = View({
     model: 'app',
     init: function (model) {
         this.create('controls', new ControlsView(this.app));
-        this.create('song', new SongView(this.app.songInfo()));
+        this.create('song', new SongView());
 
         // route
         this.app.on('beat', function (e) {
@@ -14,6 +14,13 @@ var AppView = View({
             this.controls().measure(e.value);
             this.song().measure(e.value);
         }, this);
+        
+        this.on('load', function (e) {
+            var songInfo = this.app.load(e.value);
+            this.song(new SongView(songInfo));
+            this.render();
+        }, this);
+
     },
     render: function () {
         var html = [

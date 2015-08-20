@@ -2,7 +2,7 @@ var FileInfoTitleView = View({
     type: 'FileInfoTitleView',
     model: 'song',
     render: function () {
-        return this.$el.text('Title: ' + this.song.title());
+        return this.$el.text('Title: ' + (this.song && this.song.title() || ""));
     }
 });
 
@@ -10,20 +10,19 @@ var FileInfoAuthorView = View({
     type: 'FileInfoAuthorView',
     model: 'song',
     render: function () {
-        return this.$el.text('Author: ' + this.song.author());
+        return this.$el.text('Author: ' + (this.song && this.song.author() || ""));
     }
 });
 
 var FileInfoSelectView = View({
-    type: 'FileInfoUploadView',
-    tagName: "input type='button' value='Select...'",
+    type: 'FileInfoSelectView',
+    tagName: "input type='file' value='Select...'",
     className: 'Button',
-});
-
-var FileInfoUploadView = View({
-    type: 'FileInfoUploadView',
-    tagName: "input type='button' value='Upload'",
-    className: 'Button',
+    events: {
+        'change': function (e) {
+            this.trigger('load', e.target.files[0]);
+        }
+    }
 });
 
 var FileInfoView = View({
@@ -33,14 +32,12 @@ var FileInfoView = View({
         this.create('title', new FileInfoTitleView(this.song));
         this.create('author', new FileInfoAuthorView(this.song));
         this.create('select', new FileInfoSelectView(this.song));
-        this.create('upload', new FileInfoUploadView(this.song));
     },
     render: function () {
         var html = [
             this.title().$el,
             this.author().$el,
             this.select().$el,
-            this.upload().$el
         ];
                         
         return this.$el.html(html);

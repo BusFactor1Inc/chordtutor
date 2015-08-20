@@ -52,8 +52,8 @@ var SongView = View({
     model: 'songInfo',
     contains: 'SongSectionView',
     init: function (model) {
-        this.create('fileInfo', new FileInfoView(app.songInfo()));
-        this.songInfo.each(function (section) {
+        this.create('fileInfo', new FileInfoView(this.songInfo));
+        this.songInfo && this.songInfo.each(function (section) {
             this.add(new SongSectionView(section));
         }, this);
     },

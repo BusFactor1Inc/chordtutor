@@ -72,18 +72,26 @@ var Song = Model({
 
 var Player = Model({
     type: 'Player',
-    init: function (songInfo) {
-        this.create('songInfo', songInfo);
+    init: function () {
         this.create('volume', .25);
         this.create('muted', false);
         this.create('playing', false);
-        this.create('bpm', Number(songInfo.beatsPerMinute()));
-        this.create('bpb', Number(songInfo.beatsPerMeasure())); // beats per bar
-        this.create('tpb', (60000/this.bpm())); // time per beat in ms
-        this.create('song', new Song(this.bpm(), this.bpb()).load(songInfo.rawSong));
+        this.create('songInfo')
+        this.create('bpm')
+        this.create('bpb')
+        this.create('tpb')
+        this.create('song')
         this.create('measure', 0);
         this.create('beat', 0);
         this.create('transpose', 0);
+
+        this.on('change:songInfo', function (e) {
+            this.set('bpm', Number(this.songInfo().beatsPerMinute()));
+            this.set('bpb', Number(this.songInfo().beatsPerMeasure())); // beats per bar
+            this.set('tpb', (60000/this.bpm())); // time per beat in ms
+            this.set('song', new Song(this.bpm(), this.bpb()).load(this.songInfo().rawSong));
+
+        });
 
         this.on('change:volume', function (e) {
             this.master.gain.value = this.volume();
@@ -234,18 +242,47 @@ var SongInfo = Model({
 
 var App = Model({
     type: 'App',
-    init: function (songInfo, instruments) {
-        this.create('songInfo', songInfo);
-        this.create('player', new Player(songInfo));
+    init: function (instruments) {
+        this.create('songInfo');
+        this.create('player', new Player());
         this.create('instruments', instruments);
-        this.create('tempo', Number(songInfo.beatsPerMinute()));
+        this.create('tempo');
         this.create('muted', false);
         this.create('paused', false);
         this.create('volume', 50);
+
     },
 
-    load: function(song) {
-        this.player().load();
+    load: function(e) {
+        var songFileData = " \
+:title=My first song: \
+:author=Steely Dan: \
+:beatsPerMinute=120: \
+:beatsPerMeasure=4: \
+:key=C: \
+:section=Intro: \
+:|Dm|C|Dm|C|: \
+:section=Verse1: \
+:|C|Em C| \
+ |Em|G C| \
+ |C|Em|C G|C| \
+ |C F|C G|: \
+:section=Interlude: \
+:|C|C|C G|G C| \
+ |C F|C G|: \
+:section=Verse2: \
+:|C F|C G| \
+ |C F|C G|: \
+:section=End: \
+:|Dm|C|Dm|C|: ";
+
+        var parser = new Parser(songFileData);
+        var parsedSong = parser.do();
+        var songInfo = new SongInfo().load(parsedSong);
+
+        this.set('tempo', Number(songInfo.beatsPerMinute()));
+        this.player().songInfo(songInfo);
+        return songInfo;
     },
 
     play: function () {
