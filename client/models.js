@@ -177,7 +177,10 @@ var Player = Model({
 
     play: function () {
         this.beat(0);
+        this.measure(0);
         this.start(0);
+        this.trigger('beat', self.beat());
+        this.trigger('measure', self.measure());
         this.playing(true);
         this.unmute();
     },

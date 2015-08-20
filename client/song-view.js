@@ -10,9 +10,18 @@ var SectionChordView = View({
     type: 'SectionChordView',
     model: 'chord',
     init: function (model) {
-        this.chord.on('change', this.render, this);
+        this.create('selected', false);
+        this.on('change', function () {
+            console.log('render');
+            this.render();
+        }, this);
     },
     render: function () {
+        if(this.selected()) {
+            this.$el.addClass('SectionChordViewSelected');
+        } else {
+            this.$el.removeClass('SectionChordViewSelected');
+        }
         this.$el.text(this.chord.value);
     }
 });
@@ -26,11 +35,24 @@ var SectionChordsView = View({
         for(var i = 0; i < chords.length; i++) {
             this.add(new SectionChordView(chords.at(i)));
         }
+        this.start();
     },
     render: function () {
         return this.$el.html(this.map(function (chordView) {
             return chordView.$el;
         }));
+    },
+    chordFinished: function () {
+        this.current().selected(false);
+        var next = this.next();
+        if(next) {
+            next.selected(true);
+        }
+        return !!next;
+    },
+    select: function (i) {
+        if(this.current(i))
+            return this.current(i).selected();
     }
 });
 
@@ -47,7 +69,17 @@ var SongSectionView = View({
             this.chords().$el
         ];
         return this.$el.html(html);
+    },
+    chordFinished: function () {
+        return this.chords().chordFinished();
+    },
+    select: function () {
+        this.chords().current(0).selected();
     }
+});
+
+var ChordViews = Model({
+    contains: 'SectionChordView'
 });
 
 var SongView = View({
@@ -56,9 +88,18 @@ var SongView = View({
     contains: 'SongSectionView',
     init: function (model) {
         this.create('fileInfo', new FileInfoView(this.songInfo));
-        this.songInfo && this.songInfo.each(function (section) {
-            this.add(new SongSectionView(section));
-        }, this);
+        this.create('chords', new ChordViews());
+        if(this.songInfo) {
+            this.songInfo.each(function (section) {
+                var ssv = new SongSectionView(section);
+                this.add(ssv);
+                ssv.chords().each(function (chordsView) {
+                    this.chords().add(chordsView);
+                }, this);
+            }, this);
+            this.start().select();
+            this.chords().start().selected(true);
+        }
     },
     render: function () {
         var html = this.map(function (songSection) {
@@ -74,6 +115,9 @@ var SongView = View({
     measure: function (e) {
     },
     chordFinished: function (e) {
-
+        this.chords().map(function (cv) {
+            cv.selected(false, false);
+        });
+        this.chords().next().selected(true);
     }
 });
