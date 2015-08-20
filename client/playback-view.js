@@ -63,6 +63,10 @@ var TempoValueView = View({
     model: 'app',
     init: function () {
         this.app.on('change:tempo', this.render, this);
+        this.app.player().on('beat', function (e) {
+            this.$el.removeClass('TempoValueViewBeat');
+            this.$el.addClass('TempoValueViewBeat');
+        }, this);
     },
     render: function () {
         return this.$el.text(this.app.tempo());
