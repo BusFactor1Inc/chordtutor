@@ -87,9 +87,9 @@ Streamer.prototype.do = function () {
 
   for (var i = 0; i < this.songData.sections.length; i++) {
     var section = this.songData.sections[i];
-    var section_chords = section.chords;
-    for (var j = 0; j < section_chords.length; j++) {
-      var bar = splitAndFilter(section_chords[j], ' ');
+    var sectionChords = section.chords;
+    for (var j = 0; j < sectionChords.length; j++) {
+      var bar = splitAndFilter(sectionChords[j], ' ');
       var duration = bpMeas / bar.length;
       for (var k = 0; k < bar.length; k++) {
         var chord = bar[k];
