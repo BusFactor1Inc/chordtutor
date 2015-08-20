@@ -84,7 +84,7 @@ var Player = Model({
         this.create('measure', 0);
         this.create('beat', 0);
         this.create('transpose', 0);
-        this.create('instrument', 'sine');
+        this.create('instrument', 'triangle');
 
         this.on('change:songInfo', function (e) {
             this.set('bpm', Number(this.songInfo().beatsPerMinute()));
