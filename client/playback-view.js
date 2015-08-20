@@ -145,7 +145,7 @@ var TransposeValueView = View({
         this.app.on('change:transpose', this.render, this);
     },
     render: function () {
-        return this.$el.text(this.app.transpose());
+        return this.$el.text(this.app.player().transpose());
     }
 });
 

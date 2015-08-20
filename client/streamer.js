@@ -123,7 +123,7 @@ var file = " \
 :section=Verse1: \
 :|C|Em C| \
  |Em|G C| \
- |C|Em|C4 G7|C| \
+ |C|Em|C4 G4|C| \
  |C F|C G|: \
 :section=Interlude: \
 :|C|C|C G|G C| \
@@ -134,10 +134,10 @@ var file = " \
 :section=End: \
 :|Dm|C|Dm|C|: ";
 
-var parser = new Parser(file);
-var parser_output = parser.do();
-var streamer = new Streamer(parser_output);
-console.log(streamer.do());
+//var parser = new Parser(file);
+//var parser_output = parser.do();
+//var streamer = new Streamer(parser_output);
+//console.log(streamer.do());
 
 
 
