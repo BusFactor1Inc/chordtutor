@@ -50,25 +50,25 @@ var SectionChordView = View({
         this.on('change', function () {
             this.render();
         }, this);
-        if(this.chord.length === 2) {
-            this.$el.addClass('SectionChordView2Beat');
-        }
-        if(this.chord.length === 4) {
-            this.$el.addClass('SectionChordView4Beat');
-        }
         this.create('content', new SectionChordDisplayView(model));
         this.on('endEdit', function (e) {
             this.content(new SectionChordDisplayView(model));
         });
-            
+        if(this.chord.length() === 2) {
+            this.$el.addClass('SectionChordView2Beat');
+        }
+        if(this.chord.length() === 4) {
+            this.$el.addClass('SectionChordView4Beat');
+        }
     },
     render: function () {
-        return this.$el.html(this.content().$el);
+        this.$el.html(this.content().$el);
         if(this.selected()) {
             this.$el.addClass('SectionChordViewSelected');
         } else {
             this.$el.removeClass('SectionChordViewSelected');
         }
+        return this.$el;
     }
 });
 
