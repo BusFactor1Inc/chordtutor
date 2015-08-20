@@ -3,10 +3,10 @@ var triangle = new Instrument('triangle');
 var square = new Instrument('square');
 var saw = new Instrument('sawtooth');
 var instruments = new Instruments();
-instruments.add(sin);
 instruments.add(triangle);
 instruments.add(square);
 instruments.add(saw);
+instruments.add(sin);
 
 /*
 var rawSong = {

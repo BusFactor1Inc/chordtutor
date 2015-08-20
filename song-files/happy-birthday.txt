@@ -1,0 +1,10 @@
+:title=Happy Birthday: 
+:author=Traditional: 
+:beatsPerMinute=160: 
+:beatsPerMeasure=3: 
+:key=A: 
+:section=Verse: 
+:|A|E|D4|A| 
+ |A7|D|E|A| 
+ |A|E|D4|A| 
+ |A7|D|E|A|:

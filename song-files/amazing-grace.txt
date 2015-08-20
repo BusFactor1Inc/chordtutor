@@ -1,0 +1,10 @@
+:title=Amazing Grace: 
+:author=Traditional: 
+:beatsPerMinute=140: 
+:beatsPerMeasure=4: 
+:key=D: 
+:section=Verse: 
+:|D|D7|G|D| 
+ |D|D|A|A7| 
+ |D|D7|G|D| 
+ |D|D|A7|D|:
