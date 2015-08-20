@@ -250,7 +250,7 @@ var App = Model({
         this.create('songInfo');
         this.create('player', new Player());
         this.create('instruments', instruments);
-        this.create('tempo');
+        this.create('tempo', 90);
         this.create('muted', false);
         this.create('paused', false);
         this.create('volume', 50);
@@ -338,17 +338,13 @@ var App = Model({
     },
 
     tempoUp: function () {
-        if(this.tempo()) {
-            this.tempo(this.tempo()+1);
-            this.player().bpm(this.tempo());
-        }
+        this.tempo(this.tempo()+1);
+        this.player().bpm(this.tempo());
     },
 
     tempoDown: function () {
-        if(this.tempo()) {
-            this.tempo(this.tempo()-1);
-            this.player().bpm(this.tempo());
-        }
+        this.tempo(this.tempo()-1);
+        this.player().bpm(this.tempo());
     },
 
     transposeUp: function () {
