@@ -155,8 +155,7 @@ var Player = Model({
 
                 if(!noteEndTimeout) {
                     noteEndTimeout = setTimeout(function () {
-                        if(self.playing())
-                            self.trigger('chordFinished');
+                        self.trigger('chordFinished');
                     }, dur*self.tpb());
                 }
             });
