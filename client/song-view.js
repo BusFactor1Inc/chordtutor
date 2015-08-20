@@ -118,6 +118,12 @@ var SongView = View({
     beat: function (e) {
     },
     measure: function (e) {
+        if(e === 0) {
+            this.chords().map(function (cv) {
+                cv.selected(false, false);
+            });
+            this.chords().start().select();
+        }
     },
     chordFinished: function (e) {
         this.chords().map(function (cv) {

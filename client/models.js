@@ -176,11 +176,6 @@ var Player = Model({
     },
 
     play: function () {
-        this.beat(0);
-        this.measure(0);
-        this.start(0);
-        this.trigger('beat', self.beat());
-        this.trigger('measure', self.measure());
         this.playing(true);
         this.unmute();
     },
@@ -195,10 +190,13 @@ var Player = Model({
     },
 
     stop: function () {
-        this.mute();
-        this.playing(false);
         this.beat(0);
         this.measure(0);
+        this.trigger('beat', this.beat());
+        this.trigger('measure', this.measure());
+        this.mute();
+        this.playing(false);
+
     },
 
     mute: function (value) {
@@ -285,7 +283,6 @@ var App = Model({
         this.create('muted', false);
         this.create('paused', false);
         this.create('volume', 50);
-
     },
 
     load: function(file, next) {
