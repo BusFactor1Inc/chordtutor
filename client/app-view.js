@@ -21,6 +21,10 @@ var AppView = View({
             this.render();
         }, this);
 
+        this.on('instrumentSelect', function (e) {
+            this.app.setInstrument(e.value);
+        });
+
     },
 
     render: function () {

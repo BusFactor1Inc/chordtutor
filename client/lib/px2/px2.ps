@@ -270,7 +270,7 @@
   (aref (@ this _storage) index))
 
 (defmethod *Model current (objOrNumber)
-  (if obj
+  (if objOrNumber
       (if ((typeof objOrNumber) == "object")
           (setf this._current ((@ this index-of) objOrNumber))
           (setf this._current objOrNumber))
@@ -279,9 +279,17 @@
 (defmethod *Model start ()
   (setf this._current 0))
 
+(defmethod *Model end ()
+  (setf this._current (1- this.length)))
+
 (defmethod *Model next ()
   (when (< this._current (1- this.length))
     (incf this._current)
+    (this.at this._current)))
+
+(defmethod *Model prev ()
+  (when (> this._current 0)
+    (decf this._current)
     (this.at this._current)))
 
 (defmethod *Model index-of (obj)

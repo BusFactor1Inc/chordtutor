@@ -84,6 +84,7 @@ var Player = Model({
         this.create('measure', 0);
         this.create('beat', 0);
         this.create('transpose', 0);
+        this.create('instrument', 'sine');
 
         this.on('change:songInfo', function (e) {
             this.set('bpm', Number(this.songInfo().beatsPerMinute()));
@@ -144,7 +145,7 @@ var Player = Model({
                 }
                 
                 osc.frequency.value = self.midi2freq(n);
-                osc.type = "triangle";
+                osc.type = self.instrument();
                 osc.start(0);
                 setTimeout(function () {
                     osc.stop();
@@ -193,7 +194,7 @@ var Player = Model({
     },
     unmute: function () {
         this.master.gain.value = this.volume();
-    }
+    },
 });
 
 var Section = Model({
@@ -358,4 +359,8 @@ var App = Model({
             this.player().transpose(this.player().transpose()-1);
         this.trigger('change:transpose', this.player().transpose());
     },
+
+    setInstrument: function (instrument) {
+        this.player().instrument(instrument.name());
+    }
 });

@@ -1,7 +1,7 @@
-var sin = new Instrument('Sin Wave');
-var triangle = new Instrument('Triangle Wave');
-var square = new Instrument('Square Wave');
-var saw = new Instrument('Saw Wave');
+var sin = new Instrument('sine');
+var triangle = new Instrument('triangle');
+var square = new Instrument('square');
+var saw = new Instrument('sawtooth');
 var instruments = new Instruments();
 instruments.add(sin);
 instruments.add(triangle);

@@ -288,7 +288,7 @@ Model.prototype.at = function (index) {
     return this._storage[index];
 };
 Model.prototype.current = function (objornumber) {
-    if (obj) {
+    if (objornumber) {
         return (typeof objornumber)(equalsequals, 'object') ? (this._current = this.indexOf(objornumber)) : (this._current = objornumber);
     } else {
         return this.at(this._current);
@@ -297,9 +297,18 @@ Model.prototype.current = function (objornumber) {
 Model.prototype.start = function () {
     return this._current = 0;
 };
+Model.prototype.end = function () {
+    return this._current = this.length - 1;
+};
 Model.prototype.next = function () {
     if (this._current < this.length - 1) {
         ++this._current;
+        return this.at(this._current);
+    };
+};
+Model.prototype.prev = function () {
+    if (this._current > 0) {
+        --this._current;
         return this.at(this._current);
     };
 };

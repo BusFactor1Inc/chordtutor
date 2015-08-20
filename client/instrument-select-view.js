@@ -9,20 +9,36 @@ var InstrumentSelectNameView = View({
 });
 
 var InstrumentSelectNextButtonView = View({
-    type: 'TinyButton InstrumentSelectNextButtonView'
+    type: 'TinyButton InstrumentSelectNextButtonView',
+    model: 'instruments',
+    events: {
+        'click': function (e) {
+            if(!this.instruments.next())
+                this.instruments.start();
+            this.trigger('select', this.instruments.current());
+        }
+    }
 });
 
 var InstrumentSelectPrevButtonView = View({
-    type: 'TinyButton InstrumentSelectPrevButtonView'
+    type: 'TinyButton InstrumentSelectPrevButtonView',
+    model: 'instruments',
+    events: {
+        'click': function (e) {
+            if(!this.instruments.prev())
+                this.instruments.end();
+            this.trigger('select', this.instruments.current());
+        }
+    }
 });
 
 var InstrumentSelectControlsView = View({
     type: 'InstrumentSelectControlsView',
     model: 'instruments',
     init: function () {
-        this.create('current', this.instruments.at(0));
-        this.create('next', new InstrumentSelectNextButtonView(this.current()));
-        this.create('prev', new InstrumentSelectPrevButtonView(this.current()));
+        this.create('next', new InstrumentSelectNextButtonView(instruments));
+        this.create('prev', new InstrumentSelectPrevButtonView(instruments));
+
     },
     render: function () {
         var html = [
@@ -37,8 +53,15 @@ var InstrumentSelectView = View({
     type: 'InstrumentSelectView',
     model: 'instruments',
     init: function (model) {
+        this.instruments.start();
         this.create('name', new InstrumentSelectNameView(this.instruments.at(0)));
         this.create('controls', new InstrumentSelectControlsView(model));
+        this.trigger('instrument', this.instruments.at(0));
+        this.on('select', function (e) {
+            this.name(new InstrumentSelectNameView(this.instruments.current()));
+            this.trigger('instrumentSelect', e.value);
+            this.render();
+        });
     },
     render: function () {
         var html = [
