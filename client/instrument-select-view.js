@@ -4,7 +4,8 @@ var InstrumentSelectNameView = View({
     init: function (model) {
     },
     render: function () {
-        this.$el.html(this.instrument.name());
+        var s = this.instrument.name();
+        this.$el.html(s.charAt(0).toUpperCase() + s.slice(1));
     }
 });
 

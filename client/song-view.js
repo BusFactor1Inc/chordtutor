@@ -9,8 +9,11 @@ var SectionNameView = View({
 var SectionChordView = View({
     type: 'SectionChordView',
     model: 'chord',
+    init: function (model) {
+        this.chord.on('change', this.render, this);
+    },
     render: function () {
-        this.$el.text(this.chord);
+        this.$el.text(this.chord.value);
     }
 });
 
@@ -21,7 +24,7 @@ var SectionChordsView = View({
     init: function (model) {
         var chords = this.section.chords();
         for(var i = 0; i < chords.length; i++) {
-            this.add(new SectionChordView(chords[i]));
+            this.add(new SectionChordView(chords.at(i)));
         }
     },
     render: function () {
@@ -69,6 +72,8 @@ var SongView = View({
     beat: function (e) {
     },
     measure: function (e) {
+    },
+    chordFinished: function (e) {
+
     }
 });
-

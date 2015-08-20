@@ -122,7 +122,9 @@ var Player = Model({
             }, this);
             
             var self = this;
+            var noteEndTimeout;
             notes.forEach(function (note) {
+                dur = note.dur;
                 var osc = self.audio.createOscillator();
                 osc.connect(self.master)
 
@@ -137,7 +139,7 @@ var Player = Model({
                     if(residue2 < 0) {
                         n = lower + residue2;
                     }
-                } else {
+                } if (self.transpose < 0) {
                     var residue2 = lower - n;
                     if(residue2 < 0) {
                         n = upper + residue2;
@@ -150,7 +152,14 @@ var Player = Model({
                 setTimeout(function () {
                     osc.stop();
                 }, note.dur*self.tpb());
+
+                if(!noteEndTimeout) {
+                    noteEndTimeout = setTimeout(function () {
+                        self.trigger('chordFinished');
+                    }, dur*self.tpb());
+                }
             });
+
             self.beat(self.beat()+1);
             this.trigger('beat', self.beat());
             if(self.beat() === self.bpb()) {
@@ -197,18 +206,33 @@ var Player = Model({
     },
 });
 
+var Chord = Model({
+    type: 'Chord',
+    init: function (value) {
+        this.value = value;
+    }
+});
+
+var Chords = Model({
+    type: 'Chords',
+    contains: 'Chord'
+});
+
 var Section = Model({
     type: 'Section',
     init: function (name, measure, chords) {
         this.create('name', name);
         this.create('measure', measure);
-        this.create('chords', chords);
+        this.create('chords', new Chords());
     },
     
     load: function(rawSection) {
         this.name(rawSection.name);
         this.measure(rawSection.name);
-        this.chords(rawSection.chords);
+        var chords = rawSection.chords;
+        for(var i = 0; i < chords.length; i++) {
+            this.chords().add(new Chord(chords[i]));
+        }
         return this;
     }
 });
@@ -250,45 +274,63 @@ var App = Model({
         this.create('songInfo');
         this.create('player', new Player());
         this.create('instruments', instruments);
-        this.create('tempo');
+        this.create('tempo', 90);
         this.create('muted', false);
         this.create('paused', false);
         this.create('volume', 50);
 
     },
 
-    load: function(file) {
-        var fileName = file.name;
-        var songFileData = " \
-:title=My first song: \
-:author=Steely Dan: \
-:beatsPerMinute=120: \
-:beatsPerMeasure=4: \
-:key=C: \
-:section=Intro: \
-:|Dm|C|Dm|C|: \
-:section=Verse1: \
-:|C|Em C| \
- |Em|G C| \
- |C|Em|C G|C| \
- |C F|C G|: \
-:section=Interlude: \
-:|C|C|C G|G C| \
- |C F|C G|: \
-:section=Verse2: \
-:|C F|C G| \
- |C F|C G|: \
-:section=End: \
-:|Dm|C|Dm|C|: ";
+    load: function(file, next) {
 
-        // TODO: load file as a string and pass to parser
-        var parser = new Parser(songFileData);
+        if (!file) {
+            return next();
+        }
+        var reader = new FileReader();
+        var self = this;
+        reader.onload = function(e) {
+            var contents = e.target.result;
+            var parser = new Parser(contents);
+            var parsedSong = parser.do();
+            var songInfo = new SongInfo().load(parsedSong);
+
+            self.set('tempo', Number(songInfo.beatsPerMinute()));
+            self.player().songInfo(songInfo);
+            next(songInfo);
+        };
+        reader.readAsText(file);
+    },
+
+    loadDefaultSong: function (next) {
+        var file = " \
+            :title=My first song: \
+            :author=Steely Dan: \
+            :beatsPerMinute=120: \
+            :beatsPerMeasure=4: \
+            :key=C: \
+            :section=Intro: \
+            :|Dm|C|Dm|C|: \
+            :section=Verse1: \
+            :|C|Em C| \
+             |Em|G C| \
+             |C|Em|C4 G4|C| \
+             |C F|C G|: \
+            :section=Interlude: \
+            :|C|C|C G|G C| \
+             |C F|C G|: \
+            :section=Verse2: \
+            :|C F|C G| \
+             |C F|C G|: \
+            :section=End: \
+            :|Dm|C|Dm|C|: "; 
+
+        var parser = new Parser(file);
         var parsedSong = parser.do();
         var songInfo = new SongInfo().load(parsedSong);
 
         this.set('tempo', Number(songInfo.beatsPerMinute()));
         this.player().songInfo(songInfo);
-        return songInfo;
+        next(songInfo);
     },
 
     play: function () {
@@ -339,12 +381,12 @@ var App = Model({
 
     tempoUp: function () {
         this.tempo(this.tempo()+1);
-        return this.player().bpm(this.tempo());
+        this.player().bpm(this.tempo());
     },
 
     tempoDown: function () {
         this.tempo(this.tempo()-1);
-        return this.player().bpm(this.tempo());
+        this.player().bpm(this.tempo());
     },
 
     transposeUp: function () {
