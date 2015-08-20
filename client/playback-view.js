@@ -67,7 +67,7 @@ var TempoValueView = View({
             this.$el.addClass('TempoValueViewBeat');
             var self = this;
             setTimeout(function () {
-                this.$el.removeClass('TempoValueViewBeat');
+                self.$el.removeClass('TempoValueViewBeat');
             }, 250);
         }, this);
     },
