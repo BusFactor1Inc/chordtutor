@@ -169,26 +169,31 @@ var Player = Model({
         this.beat(0);
         this.start(0);
         this.playing(true);
+        this.unmute();
     },
 
     pause: function () {
+        if(this.playing()) {
+            this.mute();
+        } else {
+            this.unmute();
+        }
         this.playing(!this.playing());
     },
 
     stop: function () {
+        this.mute();
         this.playing(false);
         this.beat(0);
         this.measure(0);
     },
 
-    mute: function () {
-        this.mute(!this.mute());
-        if(this.mute()) {
-            //TODO: this.masterGain(0) 
-        } else {
-            //TODO: this.masterGain(this.volume());
-        }
+    mute: function (value) {
+        this.master.gain.value = 0;
     },
+    unmute: function () {
+        this.master.gain.value = this.volume();
+    }
 });
 
 var Section = Model({
