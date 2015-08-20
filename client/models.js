@@ -41,7 +41,7 @@ var Song = Model({
         var dur = chord[2];
         var notes = chord[3];
 
-        var start = ((measure * this.bpb()) + beat);
+        var start = ((measure * this.bpb) + beat);
         dur = dur;
 
         var self = this;
@@ -84,8 +84,8 @@ var Player = Model({
         this.create('volume', .5);
         this.create('muted', false);
         this.create('playing', false);
-        this.create('bpm', songInfo.beatsPerMinute);
-        this.create('bpb', songInfo.beatsPerMeasure); // beats per bar
+        this.create('bpm', Number(songInfo.beatsPerMinute()));
+        this.create('bpb', Number(songInfo.beatsPerMeasure())); // beats per bar
         this.create('tpb', (60000/songInfo.beatsPerMinute())); // time per beat in ms
         this.create('song', new Song(this.bpm(), this.bpb()).load(songInfo));
         this.create('measure', 0);
@@ -288,6 +288,4 @@ var App = Model({
         if(this.transpose() > -12)
             this.transpose(this.transpose()-1);
     },
-
-    
 });
