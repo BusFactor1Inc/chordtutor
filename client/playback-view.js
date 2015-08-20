@@ -1,19 +1,22 @@
 var PlayButtonView = View({
     type: 'PlayButtonView',
-    model: 'app',
+    model: 'player',
     className: "LargeButton PlayButtonView",
     events: {
         'click': function (e) {
-            this.app.pause()
+            if(this.player.playing())
+                this.player.pause()
+            else
+                this.player.play()
         }
     },
 
     init: function(model) {
-        this.app.on('change:paused', this.render, this);
+        this.player.on('change:playing', this.render, this);
     },
     
     render: function () {
-        var isPaused = this.app.paused();
+        var isPaused = this.player.playing();
         if(isPaused){
             this.$el.addClass('PlayButtonPausedView');
             this.$el.removeClass('PlayButtonView');
@@ -26,21 +29,21 @@ var PlayButtonView = View({
 
 var StopButtonView = View({
     type: 'StopButtonView',
-    model: 'app',
+    model: 'player',
     className: "LargeButton StopButtonView",
     events: {
         'click': function (e) {
-            app.stop();
+            this.player.stop();
         }
     }
 });
 
 var PlaybackControlsView = View({
     type: 'PlaybackControlsView',
-    model: 'app',
+    model: 'player',
     init: function (model) {
-        this.create('play', new PlayButtonView(app));
-        this.create('stop', new StopButtonView(app));
+        this.create('play', new PlayButtonView(this.player));
+        this.create('stop', new StopButtonView(this.player));
     },
     render: function () {
         var html = [
@@ -223,7 +226,7 @@ var PlaybackView = View({
     type: 'PlaybackView',
     model: 'app',
     init: function (model) {
-        this.create('playback', new PlaybackControlsView(app));
+        this.create('playback', new PlaybackControlsView(this.app.player()));
         this.create('tempo', new TempoView(app));
         this.create('transpose', new TransposeView(app));
     },

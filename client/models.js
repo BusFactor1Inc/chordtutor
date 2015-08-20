@@ -155,7 +155,8 @@ var Player = Model({
 
                 if(!noteEndTimeout) {
                     noteEndTimeout = setTimeout(function () {
-                        self.trigger('chordFinished');
+                        if(self.playing())
+                            self.trigger('chordFinished');
                     }, dur*self.tpb());
                 }
             });
@@ -335,20 +336,6 @@ var App = Model({
         this.set('tempo', Number(songInfo.beatsPerMinute()));
         this.player().songInfo(songInfo);
         next(songInfo);
-    },
-
-    play: function () {
-        this.player().play();
-    },
-
-    pause: function () {
-        this.player().pause();
-        return this.paused(!this.paused());
-    },
-
-    stop: function () {
-        this.paused(false);
-        this.player().stop();
     },
 
     setVolume: function () {

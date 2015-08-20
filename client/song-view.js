@@ -122,7 +122,7 @@ var SongView = View({
             this.chords().map(function (cv) {
                 cv.selected(false, false);
             });
-            this.chords().start().select();
+            this.chords().start().selected(true);
         }
     },
     chordFinished: function (e) {
