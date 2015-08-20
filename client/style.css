@@ -38,10 +38,6 @@ body * {
     vertical-align: top;
   }
 
-  .SectionChordViewSelected {
-    border: 1px solid red;
-  }
-
   /* Individual styles for control bar containers */
   .FileInfoView {
     width: 100%;
@@ -88,8 +84,12 @@ body * {
       width: 25%;
       display: inline-block;
       border-right: 1px solid #dadada;
-      padding: 0 0.5em;
+      padding: 0.5em;
       margin: 0.5em 0;
+    }
+
+    .SectionChordView.SectionChordViewSelected {
+      background: rgba(7,134,224, 0.25);
     }
 
     /*
