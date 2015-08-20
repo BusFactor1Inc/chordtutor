@@ -281,7 +281,7 @@ var App = Model({
 
     },
 
-    load: function(file) {
+    load: function(file, next) {
         var fileName = file.name;
         var songFileData = " \
 :title=My first song: \
@@ -312,7 +312,7 @@ var App = Model({
 
         this.set('tempo', Number(songInfo.beatsPerMinute()));
         this.player().songInfo(songInfo);
-        return songInfo;
+        next(songInfo);
     },
 
     play: function () {

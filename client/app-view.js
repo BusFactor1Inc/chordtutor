@@ -17,11 +17,13 @@ var AppView = View({
         this.app.on('chordFinished', function (e) {
             this.song().chordFinished(e.value);
         }, this);
-        
+
+        var self = this;
         this.on('load', function (e) {
-            var songInfo = this.app.load(e.value);
-            this.song(new SongView(songInfo));
-            this.render();
+            this.app.load(e.value, function (songInfo) {
+                self.song(new SongView(songInfo));
+                self.render();
+            });
         }, this);
 
         this.on('instrumentSelect', function (e) {
