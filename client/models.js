@@ -210,8 +210,11 @@ var Player = Model({
 var Chord = Model({
     type: 'Chord',
     init: function (value, length) {
-        this.value = value;
-        this.length = length;
+        this.create('value', value);
+        this.create('length', length);
+        this.on('change', function () {
+            this.trigger('recompile');
+        });
     }
 });
 
@@ -283,6 +286,10 @@ var App = Model({
         this.create('muted', false);
         this.create('paused', false);
         this.create('volume', 50);
+
+        this.on('recompile', function () {
+            this.player().songInfo(this.songInfo());
+        });
     },
 
     load: function(file, next) {
@@ -297,7 +304,7 @@ var App = Model({
             var parser = new Parser(contents);
             var parsedSong = parser.do();
             var songInfo = new SongInfo().load(parsedSong);
-
+            self.songInfo(songInfo);
             self.set('tempo', Number(songInfo.beatsPerMinute()));
             self.player().songInfo(songInfo);
             next(songInfo);
@@ -331,6 +338,7 @@ var App = Model({
         var parser = new Parser(file);
         var parsedSong = parser.do();
         var songInfo = new SongInfo().load(parsedSong);
+        this.songInfo(songInfo);
 
         this.set('tempo', Number(songInfo.beatsPerMinute()));
         this.player().songInfo(songInfo);
