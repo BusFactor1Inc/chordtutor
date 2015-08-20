@@ -144,7 +144,7 @@ var Player = Model({
     },
 
     pause: function () {
-        this.playin(!this.playing());
+        this.playing(!this.playing());
     },
 
     stop: function () {
