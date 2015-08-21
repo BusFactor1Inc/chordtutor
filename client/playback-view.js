@@ -61,6 +61,23 @@ var TempoLabelView = View({
 var TempoValueView = View({
     type: 'TempoValueView',
     model: 'app',
+    events: {
+        'mousewheel': function (e) {
+            var delta = Math.max(-1, Math.min(1, (e.originalEvent.wheelDelta ||
+                                                  -e.originalEvent.detail)));
+            console.log(delta);
+
+            if(delta > 0) {
+                for(var i = 0; i < delta; i++) {
+                    this.app.tempoUp();
+                }
+            } else {
+                for(var i = 0; i < -delta; i++) {
+                    this.app.tempoDown();
+                }
+            }
+        }
+    },
     init: function () {
         this.app.on('change:tempo', this.render, this);
         this.app.player().on('beat', function (e) {
@@ -233,7 +250,6 @@ var PlaybackView = View({
     type: 'PlaybackView',
     model: 'app',
     init: function (model) {
-        debugger;
         this.create('playback', new PlaybackControlsView(this.app.player()));
         this.create('tempo', new TempoView(this.app));
         this.create('transpose', new TransposeView(this.app));
