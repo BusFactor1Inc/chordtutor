@@ -65,8 +65,6 @@ var TempoValueView = View({
         'mousewheel': function (e) {
             var delta = Math.max(-1, Math.min(1, (e.originalEvent.wheelDelta ||
                                                   -e.originalEvent.detail)));
-            console.log(delta);
-
             if(delta > 0) {
                 for(var i = 0; i < delta; i++) {
                     this.app.tempoUp();
