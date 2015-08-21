@@ -1,4 +1,4 @@
--- document and write unit tests for current, start, end, next, and
-   prev with and without loop parameters
--- add test to ensure this.render is automatically called for views
--- write test to ensure that set returns the value it is passed
+-- add Model.requuest/ajax, which binds this properly in sucess: and
+   failure:.  Write for both node (using request) and browser so that
+   node package doesn't depend on jquery.
+-- test to ensure arguments are passed to init function

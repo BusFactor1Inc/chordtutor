@@ -17,7 +17,7 @@ function Event(target, value) {
 };
 function magic(options, args) {
     this._parents = [];
-    this._props = {  };
+    this._members = {  };
     this._actions = {  };
     this._storage = [];
     if (options && options.defaults) {
@@ -70,11 +70,11 @@ function addParent(child, parent, name) {
 Model.prototype.copy = function () {
     var cls = Model(this.options);
     var obj = new cls();
-    for (var prop in this._props) {
+    for (var prop in this._members) {
         obj.destroy(prop, true);
-        var thisProp = this._props[prop];
+        var thisProp = this._members[prop];
         if (Modelp(thisProp)) {
-            obj.create(prop, this._props[prop].copy());
+            obj.create(prop, this._members[prop].copy());
         } else {
             obj.create(prop, Array.isArray(thisProp) || typeof thisProp === 'object' ? JSON.parse(JSON.stringify(thisProp)) : thisProp);
         };
@@ -108,24 +108,24 @@ Model.prototype.copy = function () {
     });
     return obj;
 };
-Model.prototype.get = function (name, silent) {
-    if (!this._props.hasOwnProperty(name)) {
+Model.prototype.get = function (name, loud) {
+    if (!this._members.hasOwnProperty(name)) {
         throw new Error('Attempt to get a property ' + name + ' that does not exist.');
     };
-    if (!silent) {
+    if (loud) {
         this.trigger('get', this[name]);
         this.trigger('get' + ':' + name, this[name]);
     };
-    return this._props[name];
+    return this._members[name];
 };
 function getset(name, value, silent) {
     return arguments.length === 1 ? this.get(name) : this.set(name, value, silent);
 };
 Model.prototype.create = function (name, value, silent) {
-    if (this._props.hasOwnProperty(name)) {
+    if (this._members.hasOwnProperty(name)) {
         throw new Error('Attempt to create property ' + name + ' that already exists.');
     };
-    this._props[name] = value;
+    this._members[name] = value;
     this[name] = getset.bind(this, name);
     addParent(value, this, name);
     if (!silent) {
@@ -135,11 +135,11 @@ Model.prototype.create = function (name, value, silent) {
     return value;
 };
 Model.prototype.set = function (name, value, silent) {
-    if (!this._props.hasOwnProperty(name)) {
+    if (!this._members.hasOwnProperty(name)) {
         throw new Error('Attempt to set a property ' + name + ' that does not exist.');
     };
-    var oldValue = this._props[name];
-    this._props[name] = value;
+    var oldValue = this._members[name];
+    this._members[name] = value;
     if (!silent) {
         this.trigger('change', oldValue);
         this.trigger('change' + ':' + name, oldValue);
@@ -148,8 +148,8 @@ Model.prototype.set = function (name, value, silent) {
     return value;
 };
 Model.prototype.destroy = function (name) {
-    var value = this._props[name];
-    delete this._props[name];
+    var value = this._members[name];
+    delete this._members[name];
     delete this._actions['change' + ':' + name];
     delete this[name];
     return this.trigger('destroy', value);
@@ -287,39 +287,36 @@ Model.prototype.at = function (index) {
     };
     return this._storage[index];
 };
-Model.prototype.current = function (objornumber) {
-    if (objornumber) {
-        return typeof objornumber === 'object' ? (this._current = objornumber) : (this._current = this.indexOf(objornumber));
+Model.prototype.current = function (objornumber, silent) {
+    if (objornumber !== undefined) {
+        var prevValue = this.at(this._current);
+        if (!silent) {
+            this.trigger('change', prevValue);
+            this.trigger('change:current', prevValue);
+        };
+        return typeof objornumber === 'object' ? this.at(this._current = this.indexOf(objornumber)) : this.at(this._current = objornumber);
     } else {
         return this.at(this._current);
     };
 };
-Model.prototype.start = function () {
-    this._current = 0;
-    return this.current();
+Model.prototype.start = function (silent) {
+    return this.current(0, silent);
 };
-Model.prototype.end = function () {
-    this._current = this.length - 1;
-    return this.current();
+Model.prototype.end = function (silent) {
+    return this.current(this.length - 1, silent);
 };
-Model.prototype.next = function (loop) {
+Model.prototype.next = function (loop, silent) {
     if (loop) {
-        return this._current = (++this._current % this.length + this.length) % this.length;
+        return this.current((this._current + 1) % this.length, silent);
     } else {
-        if (this._current < this.length - 1) {
-            ++this._current;
-            return this.at(this._current);
-        };
+        return this._current < this.length - 1 ? this.current(this._current + 1, silent) : undefined;
     };
 };
-Model.prototype.prev = function (loop) {
+Model.prototype.prev = function (loop, silent) {
     if (loop) {
-        return this._current === 0 ? (this._current = this.length - 1) : --this._current;
+        return this._current === 0 ? this.current(this.length - 1, silent) : this.current(this._current - 1, silent);
     } else {
-        if (this._current > 0) {
-            --this._current;
-            return this.at(this._current);
-        };
+        return this._current > 0 ? this.current(this._current - 1, silent) : undefined;
     };
 };
 Model.prototype.indexOf = function (obj) {
@@ -336,21 +333,27 @@ Model.prototype.each = function (fun, self) {
         fun.call(self9, item);
     };
 };
+Model.prototype.forIn = function (fun, self) {
+    var self12 = self || this;
+    for (var k in this._members) {
+        fun.call(self12, k, this._members[k]);
+    };
+};
 Model.prototype.map = function (fun, self) {
     var result = [];
-    var self12 = self || this;
-    for (var item = null, _js_arrvar14 = this._storage, _js_idx13 = 0; _js_idx13 < _js_arrvar14.length; _js_idx13 += 1) {
-        item = _js_arrvar14[_js_idx13];
-        result.push(fun.call(self12, item));
+    var self13 = self || this;
+    for (var item = null, _js_arrvar15 = this._storage, _js_idx14 = 0; _js_idx14 < _js_arrvar15.length; _js_idx14 += 1) {
+        item = _js_arrvar15[_js_idx14];
+        result.push(fun.call(self13, item));
     };
     return result;
 };
 Model.prototype.filter = function (fun, self) {
     var result = [];
-    var self15 = self || this;
-    for (var item = null, _js_arrvar17 = this._storage, _js_idx16 = 0; _js_idx16 < _js_arrvar17.length; _js_idx16 += 1) {
-        item = _js_arrvar17[_js_idx16];
-        if (fun.call(self15, item)) {
+    var self16 = self || this;
+    for (var item = null, _js_arrvar18 = this._storage, _js_idx17 = 0; _js_idx17 < _js_arrvar18.length; _js_idx17 += 1) {
+        item = _js_arrvar18[_js_idx17];
+        if (fun.call(self16, item)) {
             result.push(item);
         };
     };
@@ -358,15 +361,15 @@ Model.prototype.filter = function (fun, self) {
 };
 Model.prototype.find = function (funOrObj, self) {
     if (typeof funOrObj === 'function') {
-        for (var item = null, _js_arrvar21 = this._storage, _js_idx20 = 0; _js_idx20 < _js_arrvar21.length; _js_idx20 += 1) {
-            item = _js_arrvar21[_js_idx20];
+        for (var item = null, _js_arrvar22 = this._storage, _js_idx21 = 0; _js_idx21 < _js_arrvar22.length; _js_idx21 += 1) {
+            item = _js_arrvar22[_js_idx21];
             if (funOrObj.call(self || this, item)) {
                 return item;
             };
         };
     } else {
-        for (var item = null, _js_arrvar23 = this._storage, _js_idx22 = 0; _js_idx22 < _js_arrvar23.length; _js_idx22 += 1) {
-            item = _js_arrvar23[_js_idx22];
+        for (var item = null, _js_arrvar24 = this._storage, _js_idx23 = 0; _js_idx23 < _js_arrvar24.length; _js_idx23 += 1) {
+            item = _js_arrvar24[_js_idx23];
             if (funOrObj === item) {
                 return item;
             };
@@ -424,13 +427,23 @@ function View(options) {
                     };
                 };
             };
+            if (options.init) {
+                if (!options.initAugmented) {
+                    this.init = function () {
+                        options.originalInit.apply(this, arguments);
+                        return this.render();
+                    };
+                    options.initAugmented = this.init;
+                    options.originalInit = options.init;
+                    delete options.init;
+                };
+            };
             if (options.events) {
                 for (var event in options.events) {
                     this.$el.on(event, options.events[event].bind(this));
                 };
             };
             magic.call(this, options, arguments);
-            this.render();
             return this;
         };
     };
