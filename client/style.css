@@ -72,7 +72,13 @@ body * {
   .VolumeView {
     float: right;
     margin-right: 0;
+    min-width: 57px;
   }
+
+  .VolumeControlsView {
+    float: right;
+  }
+
 
   .PlaybackView {
     min-width: 168px;
