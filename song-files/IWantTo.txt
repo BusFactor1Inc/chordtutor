@@ -1,0 +1,10 @@
+:title=I want to break free: 
+:author=Queen: 
+:beatsPerMinute=120: 
+:beatsPerMeasure=2: 
+:key=Em: 
+:section=Intro: 
+:|Em|Em D|C|D|
+ |Em|Em D|C|D|
+ |Em|Em D|C|D|
+ |G|G|G|G|:
