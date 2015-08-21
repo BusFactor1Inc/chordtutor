@@ -81,7 +81,7 @@ body * {
 
 
   .PlaybackView {
-    min-width: 168px;
+    min-width: 150px;
   }
 
 /* CONTENT AREA */
@@ -247,6 +247,10 @@ body * {
   .SectionChordsView {
     width: 80%;
     border-left: 3px solid #dadada;
+  }
+
+  .PlaybackView {
+    min-width: 168px;
   }
 
 }
