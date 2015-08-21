@@ -63,6 +63,7 @@ var TempoValueView = View({
     model: 'app',
     events: {
         'mousewheel': function (e) {
+            // TODO: make work in Firefox
             var delta = Math.max(-1, Math.min(1, (e.originalEvent.wheelDelta ||
                                                   -e.originalEvent.detail)));
             if(delta > 0) {
@@ -74,6 +75,9 @@ var TempoValueView = View({
                     this.app.tempoDown();
                 }
             }
+
+            // TODO: Why don't you stop scroll?
+            e.preventDefault();
         }
     },
     init: function () {
