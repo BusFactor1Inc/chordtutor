@@ -6,28 +6,69 @@ var SectionNameView = View({
     }
 });
 
+var SectionChordEditView = View({
+    type: 'SongChordEditView',
+    model: 'chord',
+    tagName: "input type='text'",
+    style: {
+        width: "2em"
+    },
+    events: {
+        keypress: function (e) {
+            if(e.charCode === 13) {
+                this.endEdit();
+            }
+        }
+    },
+
+    endEdit: function () {
+        this.chord.value(this.$el.val());
+        this.trigger('endEdit');
+    }
+});
+
+var SectionChordDisplayView = View({
+    type: 'SectionChordDisplayView',
+    model: 'chord',
+
+    render: function () {
+        this.$el.text(this.chord.value());
+    }
+})
+
 var SectionChordView = View({
     type: 'SectionChordView',
     model: 'chord',
+    events: {
+        'dblclick': function (e) {
+            this.content(new SectionChordEditView(this.chord));
+            this.render();
+        }
+    },
     init: function (model) {
         this.create('selected', false);
         this.on('change', function () {
             this.render();
         }, this);
-        if(this.chord.length === 2) {
+        this.create('content', new SectionChordDisplayView(model));
+        this.on('endEdit', function (e) {
+            this.content(new SectionChordDisplayView(model));
+        });
+        if(this.chord.length() === 2) {
             this.$el.addClass('SectionChordView2Beat');
         }
-        if(this.chord.length === 4) {
+        if(this.chord.length() === 4) {
             this.$el.addClass('SectionChordView4Beat');
         }
     },
     render: function () {
+        this.$el.html(this.content().$el);
         if(this.selected()) {
             this.$el.addClass('SectionChordViewSelected');
         } else {
             this.$el.removeClass('SectionChordViewSelected');
         }
-        this.$el.text(this.chord.value);
+        return this.$el;
     }
 });
 
