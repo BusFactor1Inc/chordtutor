@@ -55,7 +55,7 @@ var PlaybackControlsView = View({
 });
 
 var TempoLabelView = View({
-    type: 'TempoLabelView',
+    type: 'TempoLabelView'
 });
 
 var TempoValueView = View({
@@ -233,9 +233,10 @@ var PlaybackView = View({
     type: 'PlaybackView',
     model: 'app',
     init: function (model) {
+        debugger;
         this.create('playback', new PlaybackControlsView(this.app.player()));
-        this.create('tempo', new TempoView(app));
-        this.create('transpose', new TransposeView(app));
+        this.create('tempo', new TempoView(this.app));
+        this.create('transpose', new TransposeView(this.app));
     },
     render: function () {
         var html = [
