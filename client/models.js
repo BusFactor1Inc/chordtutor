@@ -204,7 +204,7 @@ var Player = Model({
     },
     unmute: function () {
         this.master.gain.value = this.volume();
-    },
+    }
 });
 
 var Chord = Model({
@@ -230,7 +230,6 @@ var Section = Model({
         this.create('measure', measure);
         this.create('chords', new Chords());
     },
-    
     load: function(rawSection) {
         this.name(rawSection.name);
         this.measure(rawSection.name);

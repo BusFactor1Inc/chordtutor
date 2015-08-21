@@ -14,7 +14,7 @@ var PlayButtonView = View({
     init: function(model) {
         this.player.on('change:playing', this.render, this);
     },
-    
+
     render: function () {
         var isPaused = this.player.playing();
         if(isPaused){
@@ -145,7 +145,7 @@ var TempoView = View({
 });
 
 var TransposeLabelView = View({
-    type: 'TransposeLabelView',
+    type: 'TransposeLabelView'
 });
 
 var TransposeValueView = View({
