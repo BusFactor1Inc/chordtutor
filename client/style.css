@@ -213,7 +213,7 @@ body * {
 }
 
 .TempoValueViewBeat {
-  color: red;
+  color: rgba(7,134,224, 0.15);
 }
 
 .FileInfoTitleView {
